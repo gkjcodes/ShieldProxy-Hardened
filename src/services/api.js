@@ -1,6 +1,13 @@
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-// ── Fallback mock data generators ──
+function getHeaders(customHeaders = {}) {
+  return {
+    'Content-Type': 'application/json',
+    ...customHeaders,
+  };
+}
+
+// Fallback mock data generators
 import {
   generateMockStats,
   generateMockAlerts,
@@ -9,7 +16,57 @@ import {
   generateMockSimulatorResponse,
 } from '../data/mockData';
 
-export const analyzePrompt = async ({ message, clientId, firewallEnabled }) => {
+/**
+ * Explicit browser authentication using server-validated credentials.
+ * Establishes an HttpOnly, SameSite session cookie on success.
+ */
+export const login = async (apiKey) => {
+  const res = await fetch(`${BASE_URL}/v1/auth/login`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: getHeaders(),
+    body: JSON.stringify({ api_key: apiKey }),
+  });
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.detail || 'Authentication failed');
+  }
+  return await res.json();
+};
+
+/**
+ * Revoke the current server-side session and clear the session cookie.
+ */
+export const logout = async () => {
+  const res = await fetch(`${BASE_URL}/v1/auth/logout`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: getHeaders(),
+  });
+  return await res.json().catch(() => ({ status: 'logged_out' }));
+};
+
+/**
+ * Query current session status without storing or disclosing credentials.
+ */
+export const getSession = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/v1/auth/session`, {
+      credentials: 'include',
+      headers: getHeaders(),
+    });
+    if (!res.ok) return { authenticated: false, tenant_id: null, role: null };
+    return await res.json();
+  } catch {
+    return { authenticated: false, tenant_id: null, role: null };
+  }
+};
+
+/**
+ * Execute chat prompt analysis via hardened gateway.
+ * Transmits session cookie via credentials: 'include'.
+ */
+export const analyzePrompt = async ({ message, clientId, firewallEnabled, apiKey = null }) => {
   if (!firewallEnabled) {
     return {
       request_id: crypto.randomUUID?.()?.slice(0, 16) || Math.random().toString(36).slice(2, 18),
@@ -33,30 +90,38 @@ export const analyzePrompt = async ({ message, clientId, firewallEnabled }) => {
     };
   }
 
+  const customHeaders = {};
+  if (apiKey) {
+    customHeaders['X-API-Key'] = apiKey;
+  }
+
   try {
     const res = await fetch(`${BASE_URL}/v1/chat`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, client_id: clientId || 'demo-client-001' }),
+      credentials: 'include',
+      headers: getHeaders(customHeaders),
+      body: JSON.stringify({ message }),
     });
 
-    if (res.status === 403 || res.status === 429) {
-      const data = await res.json();
-      // FastAPI wraps HTTPException in { detail: {...} }
+    if (res.status === 401 || res.status === 403 || res.status === 413 || res.status === 429) {
+      const data = await res.json().catch(() => ({ detail: `HTTP ${res.status}` }));
       return data.detail || data;
     }
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch (err) {
-    console.warn('API unavailable, using mock:', err.message);
+    console.warn('API unavailable or returned error, using fallback:', err.message);
     return generateMockSimulatorResponse(message);
   }
 };
 
 export const getDashboardStats = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/v1/dashboard/stats`);
+    const res = await fetch(`${BASE_URL}/v1/dashboard/stats`, {
+      credentials: 'include',
+      headers: getHeaders(),
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {
@@ -66,7 +131,10 @@ export const getDashboardStats = async () => {
 
 export const getAlerts = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/v1/dashboard/alerts`);
+    const res = await fetch(`${BASE_URL}/v1/dashboard/alerts`, {
+      credentials: 'include',
+      headers: getHeaders(),
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {
@@ -76,7 +144,10 @@ export const getAlerts = async () => {
 
 export const getClients = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/v1/dashboard/clients`);
+    const res = await fetch(`${BASE_URL}/v1/dashboard/clients`, {
+      credentials: 'include',
+      headers: getHeaders(),
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {
@@ -86,7 +157,10 @@ export const getClients = async () => {
 
 export const getVolumeData = async (hours = 24) => {
   try {
-    const res = await fetch(`${BASE_URL}/v1/dashboard/volume?hours=${hours}`);
+    const res = await fetch(`${BASE_URL}/v1/dashboard/volume?hours=${hours}`, {
+      credentials: 'include',
+      headers: getHeaders(),
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {

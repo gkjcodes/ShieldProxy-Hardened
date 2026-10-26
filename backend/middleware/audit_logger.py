@@ -1,8 +1,9 @@
-import time
+﻿import time
 import hashlib
 import logging
 from datetime import datetime, timedelta
 from collections import deque
+from typing import Optional, List, Dict
 
 logger = logging.getLogger(__name__)
 
@@ -11,7 +12,12 @@ MAX_ENTRIES = 10000
 
 
 class AuditLogger:
-    """Logs all requests to Redis streams with fallback to in-memory deque."""
+    """
+    Privacy-safe Audit Logger.
+    Persists structured security event metadata to Redis streams with in-memory deque fallback.
+    Enforces Phase 1 Zero-Raw-Prompt Policy: user prompt text, raw PII, and response text
+    are strictly excluded from routine event logs.
+    """
 
     def __init__(self, redis_client):
         self.redis = redis_client
@@ -19,56 +25,97 @@ class AuditLogger:
 
     async def log(self, entry: dict):
         try:
+            # Build safe, non-sensitive event preview metadata
+            threat_type = str(entry.get("threat_type", "SAFE"))
+            is_blocked = str(entry.get("is_blocked", False))
+
+            if str(is_blocked).lower() == "true":
+                patterns = entry.get("matched_patterns", [])
+                pattern_str = f" ({','.join(patterns[:2])})" if patterns else ""
+                preview = f"[{threat_type}_BLOCKED]{pattern_str}"
+            else:
+                preview = f"[PASSED] Query processed cleanly"
+
+            prompt_hash = str(entry.get("prompt_hash", ""))
+
             fields = {
                 "timestamp": entry.get("timestamp", datetime.utcnow().isoformat() + "Z"),
-                "client_id": str(entry.get("client_id", "anonymous")),
+                "tenant_id": str(entry.get("tenant_id") or entry.get("client_id") or "anonymous"),
                 "request_id": str(entry.get("request_id", "")),
-                "threat_type": str(entry.get("threat_type", "SAFE")),
+                "threat_type": threat_type,
+                "is_blocked": is_blocked,
+                "confidence": str(entry.get("confidence", 0.0)),
+                "pii_count": str(entry.get("pii_count", 0)),
+                "latency_ms": str(entry.get("latency_ms", 0)),
+                "prompt_hash": prompt_hash,
+                "prompt_preview": preview,
+            }
+
+            await self.redis.xadd(STREAM_KEY, fields, maxlen=MAX_ENTRIES)
+            self._memory_log.append(fields)
+
+        except Exception as e:
+            logger.warning("Audit log write failed: %s", e)
+            fallback_fields = {
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "tenant_id": str(entry.get("tenant_id") or "unknown"),
+                "request_id": str(entry.get("request_id", "")),
+                "threat_type": str(entry.get("threat_type", "UNKNOWN")),
                 "is_blocked": str(entry.get("is_blocked", False)),
                 "confidence": str(entry.get("confidence", 0.0)),
                 "pii_count": str(entry.get("pii_count", 0)),
                 "latency_ms": str(entry.get("latency_ms", 0)),
-                "prompt_hash": hashlib.sha256(
-                    entry.get("prompt", "").encode()
-                ).hexdigest()[:16],
-                "prompt_preview": entry.get("prompt", "")[:80],
+                "prompt_hash": "",
+                "prompt_preview": "[LOG_FAILURE]",
             }
-            await self.redis.xadd(STREAM_KEY, fields, maxlen=MAX_ENTRIES)
-            self._memory_log.append(fields)
-        except Exception as e:
-            logger.warning("Audit log write failed: %s", e)
-            fields["timestamp"] = datetime.utcnow().isoformat() + "Z"
-            self._memory_log.append(fields)
+            self._memory_log.append(fallback_fields)
 
-    async def get_recent(self, count: int = 50) -> list:
+    async def get_recent(self, count: int = 50, tenant_id: Optional[str] = None) -> List[dict]:
+        results = []
         try:
-            entries = await self.redis.xrevrange(STREAM_KEY, count=count)
-            results = []
+            entries = await self.redis.xrevrange(STREAM_KEY, count=count * 2)
             for entry_id, fields in entries:
-                fields["id"] = entry_id
-                results.append(fields)
+                fields_dict = dict(fields)
+                fields_dict["id"] = entry_id
+                if tenant_id and fields_dict.get("tenant_id") != tenant_id:
+                    continue
+                results.append(fields_dict)
+                if len(results) >= count:
+                    break
             if results:
                 return results
         except Exception as e:
-            logger.warning("Redis read failed, using memory: %s", e)
+            logger.warning("Redis audit stream read failed, using memory: %s", e)
 
-        entries = list(self._memory_log)
-        entries.reverse()
-        return entries[:count]
+        mem_entries = list(self._memory_log)
+        mem_entries.reverse()
+        for e in mem_entries:
+            if tenant_id and e.get("tenant_id") != tenant_id:
+                continue
+            results.append(dict(e))
+            if len(results) >= count:
+                break
+        return results
 
-    async def get_stats(self) -> dict:
-        entries = await self.get_recent(500)
-
+    async def get_stats(self, tenant_id: Optional[str] = None) -> dict:
+        entries = await self.get_recent(500, tenant_id=tenant_id)
         if not entries:
-            from utils.mock_data import generate_mock_stats
-            return generate_mock_stats()
+            return {
+                "total_requests": 0,
+                "total_blocked": 0,
+                "total_passed": 0,
+                "block_rate": 0.0,
+                "threats_by_type": {},
+                "avg_latency_ms": 0.0,
+                "requests_last_hour": 0,
+            }
 
         total = len(entries)
         blocked = sum(1 for e in entries if str(e.get("is_blocked", "False")).lower() == "true")
         passed = total - blocked
 
-        threats_by_type = {}
-        total_latency = 0
+        threats_by_type: Dict[str, int] = {}
+        total_latency = 0.0
         now = datetime.utcnow()
         requests_last_hour = 0
 
@@ -94,20 +141,18 @@ class AuditLogger:
             "requests_last_hour": requests_last_hour,
         }
 
-    async def get_client_stats(self) -> list:
+    async def get_client_stats(self) -> List[dict]:
         entries = await self.get_recent(500)
-
         if not entries:
-            from utils.mock_data import generate_mock_clients
-            return generate_mock_clients()
+            return []
 
         clients = {}
         for e in entries:
-            cid = e.get("client_id", "anonymous")
+            cid = e.get("tenant_id") or e.get("client_id") or "anonymous"
             if cid not in clients:
                 clients[cid] = {
                     "client_id": cid,
-                    "api_key_masked": f"sk-***{hashlib.md5(cid.encode()).hexdigest()[-4:]}",
+                    "api_key_masked": f"sk-***{hashlib.sha256(cid.encode()).hexdigest()[-4:]}",
                     "total_requests": 0,
                     "total_blocked": 0,
                     "last_active": e.get("timestamp", ""),

@@ -1,11 +1,12 @@
+﻿import uuid
+from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field
-from typing import Optional, List
-import uuid
 
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., min_length=1, max_length=2000)
-    client_id: str = Field(default="anonymous")
+    message: str = Field(..., min_length=1, max_length=50000, description="User prompt text to evaluate and route.")
+    # client_id is retained solely for legacy backwards compatibility; never used for auth or quota decisions
+    client_id: Optional[str] = Field(default=None, description="Deprecated client tag; identity is bound to API key.")
 
 
 class PipelineStage(BaseModel):
@@ -24,6 +25,7 @@ class ThreatAnalysis(BaseModel):
 
 class ChatResponse(BaseModel):
     request_id: str = Field(default_factory=lambda: uuid.uuid4().hex[:16])
+    tenant_id: str = Field(default="anonymous")
     blocked: bool
     block_reason: Optional[str] = None
     threat_analysis: ThreatAnalysis
@@ -71,3 +73,10 @@ class VolumeEntry(BaseModel):
     timestamp: str
     blocked: int
     passed: int
+
+
+class ErrorDetail(BaseModel):
+    code: str
+    message: str
+    request_id: Optional[str] = None
+    details: Optional[Dict[str, Any]] = None
