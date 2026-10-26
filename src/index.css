@@ -1,0 +1,140 @@
+/* ═══════════════════════════════════════════════════════════════
+   ShieldProxy — Base Reset & Animated Backgrounds
+   Pure Vanilla CSS — No Tailwind
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Animated Wave Background ── */
+.wave-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-bg::before,
+.wave-bg::after {
+  content: '';
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wave-bg::before {
+  background:
+    radial-gradient(ellipse 600px 200px at 20% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 800px 300px at 80% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
+  animation: aurora-drift 25s ease-in-out infinite alternate;
+}
+
+.wave-bg::after {
+  background:
+    radial-gradient(ellipse 500px 250px at 60% 70%, rgba(139, 92, 246, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse 400px 200px at 30% 40%, rgba(16, 185, 129, 0.02) 0%, transparent 60%);
+  animation: aurora-drift 30s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  33%  { transform: translate(3%, -2%) rotate(1deg); }
+  66%  { transform: translate(-2%, 3%) rotate(-1deg); }
+  100% { transform: translate(1%, -1%) rotate(0.5deg); }
+}
+
+/* ── Floating Orbs ── */
+.floating-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  top: 10%;
+  right: -5%;
+  animation: orb-float-1 20s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+  bottom: 15%;
+  left: 5%;
+  animation: orb-float-2 25s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.04) 0%, transparent 70%);
+  top: 50%;
+  left: 40%;
+  animation: orb-float-3 18s ease-in-out infinite;
+}
+
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(-30px, 40px) scale(1.1); }
+  50%  { transform: translate(20px, -20px) scale(0.95); }
+  75%  { transform: translate(-10px, -30px) scale(1.05); }
+}
+
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(40px, -30px) scale(1.05); }
+  50%  { transform: translate(-20px, 20px) scale(1.1); }
+  75%  { transform: translate(15px, 40px) scale(0.95); }
+}
+
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-25px, 35px) scale(1.15); }
+  66%  { transform: translate(30px, -15px) scale(0.9); }
+}
+
+/* ── Particle Field ── */
+.particle-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(139, 92, 246, 0.4);
+  border-radius: 50%;
+  animation: particle-rise linear infinite;
+}
+
+.particle:nth-child(odd) {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.particle:nth-child(3n) {
+  width: 3px;
+  height: 3px;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+@keyframes particle-rise {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    transform: translateY(-10vh) translateX(20px);
+    opacity: 0;
+  }
+}

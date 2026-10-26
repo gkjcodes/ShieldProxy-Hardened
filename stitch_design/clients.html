@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy | Clients</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;1,400&amp;family=Space+Grotesk:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#aaabae",
+                        "tertiary-container": "#c8d8f3",
+                        "on-primary": "#00643a",
+                        "primary-fixed": "#00fc9b",
+                        "tertiary-dim": "#bacae4",
+                        "outline-variant": "#46484a",
+                        "on-tertiary": "#45546a",
+                        "surface-dim": "#0c0e10",
+                        "inverse-surface": "#f9f9fc",
+                        "primary-dim": "#00ec91",
+                        "on-secondary-fixed-variant": "#005964",
+                        "surface-bright": "#292c30",
+                        "on-tertiary-container": "#3c4c61",
+                        "secondary-container": "#006875",
+                        "on-surface": "#f0f0f3",
+                        "background": "#0c0e10",
+                        "primary": "#a0ffc3",
+                        "surface-container-highest": "#232629",
+                        "tertiary-fixed-dim": "#bacae4",
+                        "tertiary": "#d7e6ff",
+                        "surface-variant": "#232629",
+                        "on-primary-fixed": "#004527",
+                        "inverse-on-surface": "#535558",
+                        "on-primary-fixed-variant": "#00653b",
+                        "tertiary-fixed": "#c8d8f3",
+                        "on-secondary": "#004d57",
+                        "surface-container-lowest": "#000000",
+                        "surface": "#0c0e10",
+                        "surface-container": "#171a1c",
+                        "on-background": "#f0f0f3",
+                        "inverse-primary": "#006d40",
+                        "surface-tint": "#a0ffc3",
+                        "on-secondary-container": "#e8fbff",
+                        "surface-container-high": "#1d2023",
+                        "error-container": "#9f0519",
+                        "on-secondary-fixed": "#003a42",
+                        "secondary": "#00e3fd",
+                        "secondary-fixed-dim": "#00d7f0",
+                        "on-tertiary-fixed": "#29394e",
+                        "error-dim": "#d7383b",
+                        "on-primary-container": "#005b34",
+                        "error": "#ff716c",
+                        "secondary-fixed": "#26e6ff",
+                        "secondary-dim": "#00d4ec",
+                        "surface-container-low": "#111416",
+                        "primary-fixed-dim": "#00ec91",
+                        "on-tertiary-fixed-variant": "#46556b",
+                        "primary-container": "#00fc9b",
+                        "outline": "#747578",
+                        "on-error": "#490006",
+                        "on-error-container": "#ffa8a3"
+                    },
+                    fontFamily: {
+                        "headline": ["Newsreader"],
+                        "body": ["Space Grotesk"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0c0e10;
+            background-image:
+                radial-gradient(circle at 50% -20%, #a0ffc30a 0%, transparent 50%),
+                linear-gradient(rgba(160, 255, 195, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(160, 255, 195, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(17, 20, 22, 0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(160, 255, 195, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Shell -->
+<nav class="bg-[#0c0e10]/80 backdrop-blur-xl border-b border-[#a0ffc3]/10 flex justify-between items-center w-full px-8 h-16 fixed top-0 z-50">
+<div class="flex items-center gap-8">
+<span class="font-['Newsreader'] italic text-xl text-[#a0ffc3] tracking-wider">ShieldProxy</span>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-500 font-['Space_Grotesk'] hover:text-[#00e3fd] transition-colors duration-300" href="#">Overview</a>
+<a class="text-[#a0ffc3] font-bold hover:text-[#00e3fd] transition-colors duration-300" href="#">Clients</a>
+<a class="text-slate-500 font-['Space_Grotesk'] hover:text-[#00e3fd] transition-colors duration-300" href="#">Alerts</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-[#00e3fd] transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-slate-500 hover:text-[#00e3fd] transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 bg-surface-container-high overflow-hidden border border-primary/20">
+<img alt="Security Officer Profile" data-alt="close-up portrait of a security professional in a dark technical environment with subtle cyan rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUOydhixIkzI2XFsQC2OSzKU8Pkvq7e6rhqicslq3WyxP6p9hqm8l5j10HnsIBmFSS9RiL7ugwtO4nnRNE9sbDgnS8qVAy-iwiRhONdEuInCPJF0T3H5EL6Qhco4x9F30kzPBM8tT-6C54VK1iG-cN0molaunb_0Q1tYRIS0oz7SlvMd4NYrBl_8Mzi348CJ77z7A6rM_7anOrXwgwkIZqhSNNVdFCAcTjRV3cCG1p0urODZonBuvecS3sieB9m0AE_Dye_NsjpHs"/>
+</div>
+</div>
+</nav>
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 bg-[#111416]/60 backdrop-blur-[40px] docked left-0 h-screen w-64 border-r border-[#a0ffc3]/5 shadow-[0_0_15px_rgba(0,227,253,0.05)] hidden lg:flex">
+<div class="px-8 mb-12">
+<div class="font-['Newsreader'] italic text-2xl text-[#f0f0f3]">ShieldProxy</div>
+<div class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-[10px] text-primary/60 mt-1">V.2.0.4-BETA</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-slate-500 flex items-center gap-4 px-6 py-4 hover:bg-[#00e3fd]/5 hover:text-[#00e3fd] transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Overview</span>
+</a>
+<a class="text-[#a0ffc3] bg-[#a0ffc3]/5 border-r-2 border-[#a0ffc3] flex items-center gap-4 px-6 py-4 translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Clients</span>
+</a>
+<a class="text-slate-500 flex items-center gap-4 px-6 py-4 hover:bg-[#00e3fd]/5 hover:text-[#00e3fd] transition-all duration-200" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Alerts</span>
+</a>
+<a class="text-slate-500 flex items-center gap-4 px-6 py-4 hover:bg-[#00e3fd]/5 hover:text-[#00e3fd] transition-all duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Analytics</span>
+</a>
+<a class="text-slate-500 flex items-center gap-4 px-6 py-4 hover:bg-[#00e3fd]/5 hover:text-[#00e3fd] transition-all duration-200" href="#">
+<span class="material-symbols-outlined">biotech</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Attack Simulator</span>
+</a>
+</nav>
+<div class="px-6 mb-8">
+<button class="w-full bg-primary text-on-primary font-bold py-3 text-xs tracking-widest hover:shadow-[0_0_15px_#a0ffc3] transition-all">
+                INITIATE DECRYPT
+            </button>
+</div>
+<div class="border-t border-primary/5 pt-4">
+<a class="text-slate-500 flex items-center gap-4 px-6 py-3 hover:text-[#00e3fd]" href="#">
+<span class="material-symbols-outlined">help_center</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Support</span>
+</a>
+<a class="text-slate-500 flex items-center gap-4 px-6 py-3 hover:text-[#00e3fd]" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-[0.1em] text-xs">Logs</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-24 px-8 pb-12 min-h-screen">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+<div class="max-w-2xl">
+<h1 class="font-['Newsreader'] italic text-5xl md:text-6xl text-on-surface leading-tight tracking-tight">
+                    Client Infrastructure <span class="text-primary/40 block md:inline">Registry</span>
+</h1>
+<p class="font-['Space_Grotesk'] text-slate-500 mt-4 tracking-wide uppercase text-xs">Secure endpoint management for distributed proxy nodes.</p>
+</div>
+<button class="bg-primary text-on-primary font-bold px-8 py-4 flex items-center gap-3 hover:shadow-[0_0_20px_rgba(160,255,195,0.4)] transition-all">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="tracking-widest text-xs uppercase">Provision New Client</span>
+</button>
+</header>
+<!-- Key Stats Bento Cluster -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 mb-16">
+<div class="glass-panel p-8 border-l-2 border-primary">
+<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Total API Keys</div>
+<div class="font-['Space_Grotesk'] text-4xl text-primary font-light">1,248</div>
+<div class="flex items-center gap-2 mt-4 text-[10px] text-secondary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-bold">+4.2% FROM LAST LOG</span>
+</div>
+</div>
+<div class="glass-panel p-8">
+<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Active Handshakes</div>
+<div class="font-['Space_Grotesk'] text-4xl text-on-surface font-light">42.8k</div>
+<div class="flex items-center gap-2 mt-4 text-[10px] text-primary">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span class="font-bold">SYSTEM NOMINAL</span>
+</div>
+</div>
+<div class="glass-panel p-8">
+<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Global Latency</div>
+<div class="font-['Space_Grotesk'] text-4xl text-secondary font-light">12<span class="text-lg ml-1">ms</span></div>
+<div class="flex items-center gap-2 mt-4 text-[10px] text-slate-400">
+<span class="material-symbols-outlined text-sm">speed</span>
+<span class="font-bold">OPTIMIZED ROUTE</span>
+</div>
+</div>
+<div class="glass-panel p-8 bg-surface-container-low">
+<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Threat Mitigation</div>
+<div class="font-['Space_Grotesk'] text-4xl text-error font-light">99.9<span class="text-lg ml-1">%</span></div>
+<div class="flex items-center gap-2 mt-4 text-[10px] text-error">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-bold">VAULT SECURED</span>
+</div>
+</div>
+</section>
+<!-- Main Infrastructure Registry -->
+<div class="space-y-4">
+<div class="grid grid-cols-12 px-8 py-2 font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">
+<div class="col-span-4">Access Point Identity</div>
+<div class="col-span-3">API Key Reference</div>
+<div class="col-span-2 text-center">Usage Trend</div>
+<div class="col-span-2 text-center">Block Rate</div>
+<div class="col-span-1 text-right">Status</div>
+</div>
+<!-- FintechBot v2 -->
+<div class="glass-panel group hover:bg-surface-container-low transition-colors">
+<div class="grid grid-cols-12 items-center px-8 py-6">
+<div class="col-span-4 flex items-center gap-4">
+<div class="w-10 h-10 bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-xl">account_balance</span>
+</div>
+<div>
+<h3 class="font-['Space_Grotesk'] font-bold text-on-surface">FintechBot v2</h3>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">Primary Ledger Service</p>
+</div>
+</div>
+<div class="col-span-3">
+<code class="text-secondary font-['Space_Grotesk'] text-xs tracking-tighter opacity-70">
+                            SHLD_••••_••••_8842
+                        </code>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-[#00E5FF] text-sm">+12%</span>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-on-surface/80 text-sm">0.02%</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<span class="px-2 py-0.5 border border-primary/30 text-primary text-[9px] font-bold uppercase tracking-widest bg-primary/5">Active</span>
+</div>
+</div>
+</div>
+<!-- CryptoScale Edge -->
+<div class="glass-panel group hover:bg-surface-container-low transition-colors">
+<div class="grid grid-cols-12 items-center px-8 py-6">
+<div class="col-span-4 flex items-center gap-4">
+<div class="w-10 h-10 bg-secondary/10 flex items-center justify-center border border-secondary/20">
+<span class="material-symbols-outlined text-secondary text-xl">currency_bitcoin</span>
+</div>
+<div>
+<h3 class="font-['Space_Grotesk'] font-bold text-on-surface">CryptoScale Edge</h3>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">High-Frequency Trading</p>
+</div>
+</div>
+<div class="col-span-3">
+<code class="text-secondary font-['Space_Grotesk'] text-xs tracking-tighter opacity-70">
+                            SHLD_••••_••••_9210
+                        </code>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-[#00E5FF] text-sm">+8.4%</span>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-on-surface/80 text-sm">0.14%</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<span class="px-2 py-0.5 border border-primary/30 text-primary text-[9px] font-bold uppercase tracking-widest bg-primary/5">Active</span>
+</div>
+</div>
+</div>
+<!-- DataHarvest Alpha -->
+<div class="glass-panel group hover:bg-surface-container-low transition-colors opacity-60">
+<div class="grid grid-cols-12 items-center px-8 py-6">
+<div class="col-span-4 flex items-center gap-4">
+<div class="w-10 h-10 bg-slate-500/10 flex items-center justify-center border border-slate-500/20">
+<span class="material-symbols-outlined text-slate-500 text-xl">database</span>
+</div>
+<div>
+<h3 class="font-['Space_Grotesk'] font-bold text-on-surface">DataHarvest Alpha</h3>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">Batch Ingestion Node</p>
+</div>
+</div>
+<div class="col-span-3">
+<code class="text-slate-500 font-['Space_Grotesk'] text-xs tracking-tighter">
+                            SHLD_••••_••••_4411
+                        </code>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-slate-500 text-sm">--</span>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-slate-500 text-sm">--</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<span class="px-2 py-0.5 border border-slate-500/30 text-slate-500 text-[9px] font-bold uppercase tracking-widest bg-slate-500/5">Paused</span>
+</div>
+</div>
+</div>
+<!-- SecureVault Main -->
+<div class="glass-panel group hover:bg-surface-container-low transition-colors">
+<div class="grid grid-cols-12 items-center px-8 py-6">
+<div class="col-span-4 flex items-center gap-4">
+<div class="w-10 h-10 bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-xl">lock</span>
+</div>
+<div>
+<h3 class="font-['Space_Grotesk'] font-bold text-on-surface">SecureVault Main</h3>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">Asset Custody Interface</p>
+</div>
+</div>
+<div class="col-span-3">
+<code class="text-secondary font-['Space_Grotesk'] text-xs tracking-tighter opacity-70">
+                            SHLD_••••_••••_0001
+                        </code>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-[#00E5FF] text-sm">+2.1%</span>
+</div>
+<div class="col-span-2 text-center">
+<span class="font-['Space_Grotesk'] text-on-surface/80 text-sm">0.00%</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<span class="px-2 py-0.5 border border-primary/30 text-primary text-[9px] font-bold uppercase tracking-widest bg-primary/5">Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Infrastructure Map Decoration (Abstract) -->
+<div class="mt-24 h-64 glass-panel relative overflow-hidden flex items-center justify-center">
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<img alt="Network Grid Visualization" class="w-full h-full object-cover" data-alt="abstract technical grid pattern with glowing nodes and interconnecting lines in emerald and cyan over dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtkCP8sI4W-cwTNtUGc2Uj6ZHXZL8YUi2AfEueWmalnWar0XHkvxim6oaLLVFioErFA9Ko9rdTRglFrh03UsYZvmL18mVkfPRUYSRIiHGuSxoqSpHYLcU1WzXl6WyLxy7Wlud58cCxJHIcgkhKX3cze6_vkl8KX7umm3fADfEdZEGb4nPcwVplPWZA-xVrDHo1_4xfE4l4BXf5krwF8YVV5iRbqeYUtExTaNnJKihSElSKPchyDu9Y2PHbBFRyuClIRTZyCCsKkSw"/>
+</div>
+<div class="text-center relative z-10">
+<p class="font-['Newsreader'] italic text-2xl text-on-surface/40">Securing global data transmission from the obsidian vault.</p>
+<div class="mt-4 flex justify-center gap-2">
+<span class="w-1 h-1 bg-primary"></span>
+<span class="w-1 h-1 bg-primary/60"></span>
+<span class="w-1 h-1 bg-primary/30"></span>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom NavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full glass-panel h-16 flex items-center justify-around z-50 border-t border-primary/10">
+<a class="text-slate-500" href="#"><span class="material-symbols-outlined">dashboard</span></a>
+<a class="text-[#a0ffc3]" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span></a>
+<a class="text-slate-500" href="#"><span class="material-symbols-outlined">security</span></a>
+<a class="text-slate-500" href="#"><span class="material-symbols-outlined">settings</span></a>
+</nav>
+</body></html>

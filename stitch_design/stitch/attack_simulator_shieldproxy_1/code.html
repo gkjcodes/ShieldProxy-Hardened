@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy | Attack Simulator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "surface-container-high": "#e8e3da",
+                        "inverse-primary": "#f5f0e8",
+                        "on-surface-variant": "#4a4a4a",
+                        "secondary-fixed": "#ffdad6",
+                        "on-primary-fixed": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "surface": "#f5f0e8",
+                        "on-tertiary-container": "#1a1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1a1a",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "surface-dim": "#d6d1c9",
+                        "surface-container": "#eee9e0",
+                        "primary": "#1a1a1a",
+                        "secondary-container": "#ffdad6",
+                        "tertiary-fixed": "#d6e3ff",
+                        "surface-bright": "#faf7f2",
+                        "surface-container-highest": "#e2ddd4",
+                        "surface-container-low": "#f2ede5",
+                        "outline": "#1a1a1a",
+                        "on-secondary": "#1a1a1a",
+                        "on-primary-container": "#1a1a1a",
+                        "inverse-on-surface": "#f5f0e8",
+                        "background": "#f5f0e8",
+                        "tertiary": "#0055ff",
+                        "surface-tint": "#1a1a1a",
+                        "on-background": "#1a1a1a",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "secondary": "#e63b2e",
+                        "primary-fixed": "#ffcc00",
+                        "outline-variant": "#d0cbc3",
+                        "primary-fixed-dim": "#e6b800",
+                        "error": "#cc0000",
+                        "tertiary-container": "#d6e3ff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e8e3da",
+                        "primary-container": "#ffcc00",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "on-secondary-container": "#1a1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(26, 26, 26, 1);
+        }
+        .neo-shadow-active {
+            box-shadow: 0px 0px 0px 0px rgba(26, 26, 26, 1);
+            transform: translate(4px, 4px);
+        }
+        body {
+            cursor: crosshair;
+        }
+        /* Custom scrollbar for neo-brutalist feel */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #f5f0e8; border-left: 2px solid #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border: 2px solid #f5f0e8; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-fixed selection:text-on-primary-fixed overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#f5f0e8] dark:bg-zinc-900 border-b-4 border-[#1a1a1a] dark:border-white shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+<div class="flex items-center gap-4">
+<span class="text-3xl font-black text-[#1a1a1a] dark:text-white uppercase italic font-headline">ShieldProxy</span>
+</div>
+<div class="flex items-center gap-8">
+<div class="hidden md:flex gap-6 font-headline font-bold uppercase tracking-tighter">
+<a class="text-[#1a1a1a] dark:text-zinc-300 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Dashboard</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Logs</a>
+<a class="text-[#ffcc00] underline decoration-4 px-2" href="#">Simulator</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-2xl cursor-pointer hover:bg-[#ffcc00] p-1">sensors</span>
+<span class="material-symbols-outlined text-2xl cursor-pointer hover:bg-[#ffcc00] p-1">account_circle</span>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-80px)] z-40 flex flex-col pt-8 bg-[#f5f0e8] dark:bg-zinc-900 border-r-4 border-[#1a1a1a] dark:border-white w-64 font-headline font-bold uppercase">
+<div class="px-6 mb-8">
+<h2 class="text-xl font-black text-[#1a1a1a]">System Active</h2>
+<p class="text-xs opacity-60">Shielding LLMs</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span> Overview
+            </a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3">group</span> Clients
+            </a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3">warning</span> Alerts
+            </a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3">analytics</span> Analytics
+            </a>
+<a class="bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] flex items-center p-4 m-2 shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">security</span> Simulator
+            </a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full py-4 bg-secondary text-on-secondary border-2 border-primary font-black uppercase neo-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+                New Policy
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 mt-20 p-8 min-h-screen">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="inline-block bg-primary-fixed px-3 py-1 border-2 border-primary mb-4 font-headline font-bold uppercase text-sm italic">
+                Experimental Feature v4.0.2
+            </div>
+<h1 class="text-7xl font-headline font-black uppercase tracking-tighter leading-none mb-4">
+                LLM <span class="text-tertiary">Attack</span> <br/>Simulator
+            </h1>
+<p class="max-w-2xl text-xl font-medium leading-relaxed">
+                Test your security perimeter against adversarial prompts. Run real-time jailbreak simulations and monitor ShieldProxy's defensive classification in a controlled playground.
+            </p>
+</header>
+<!-- Presets Row -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<button class="flex flex-col items-start p-6 bg-surface-container border-4 border-primary neo-shadow hover:bg-primary-fixed transition-colors text-left">
+<span class="material-symbols-outlined text-4xl mb-4">terminal</span>
+<span class="font-headline font-black uppercase text-xl">Standard Jailbreak</span>
+<span class="text-sm mt-2 opacity-70">Classic "Do Anything Now" (DAN) style redirection attempts.</span>
+</button>
+<button class="flex flex-col items-start p-6 bg-surface-container border-4 border-primary neo-shadow hover:bg-tertiary-fixed transition-colors text-left">
+<span class="material-symbols-outlined text-4xl mb-4">translate</span>
+<span class="font-headline font-black uppercase text-xl">Hinglish Injection</span>
+<span class="text-sm mt-2 opacity-70">Multi-lingual token manipulation to bypass semantic filters.</span>
+</button>
+<button class="flex flex-col items-start p-6 bg-surface-container border-4 border-primary neo-shadow hover:bg-secondary-fixed transition-colors text-left">
+<span class="material-symbols-outlined text-4xl mb-4">identity_platform</span>
+<span class="font-headline font-black uppercase text-xl">PII Leak Attempt</span>
+<span class="text-sm mt-2 opacity-70">Social engineering probes designed to extract sensitive user data.</span>
+</button>
+</section>
+<!-- Playground Split Screen -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border-4 border-primary bg-primary overflow-hidden neo-shadow mb-12">
+<!-- Left Panel: Input -->
+<div class="bg-surface p-8 flex flex-col min-h-[500px] border-r-2 border-primary">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary"></div>
+<h3 class="font-headline font-black uppercase text-2xl tracking-tight">Raw Prompt</h3>
+</div>
+<span class="text-xs font-mono font-bold bg-surface-container-highest px-2 py-1">CHAR_COUNT: 422</span>
+</div>
+<div class="flex-1 relative">
+<textarea class="w-full h-full p-6 bg-surface-container-low border-2 border-primary font-mono text-lg focus:ring-0 focus:outline-none resize-none" placeholder="Enter adversarial payload here..."></textarea>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<button class="p-2 bg-surface border-2 border-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined">content_paste</span>
+</button>
+<button class="p-2 bg-surface border-2 border-primary hover:bg-secondary-fixed transition-all">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-6 flex gap-4">
+<button class="flex-1 py-4 bg-tertiary text-white border-2 border-primary font-headline font-black uppercase text-xl tracking-widest hover:invert transition-all">
+                        Execute Attack
+                    </button>
+</div>
+</div>
+<!-- Right Panel: Output -->
+<div class="bg-surface-container-highest p-8 flex flex-col min-h-[500px] border-l-2 border-primary">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-secondary"></div>
+<h3 class="font-headline font-black uppercase text-2xl tracking-tight">ShieldProxy Response</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="text-xs font-black uppercase tracking-widest">Intercepting...</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-6">
+<!-- Verdict Card -->
+<div class="p-6 bg-error text-white border-2 border-primary neo-shadow flex items-center justify-between">
+<div>
+<p class="text-xs font-black uppercase mb-1 opacity-80 tracking-tighter">Current Verdict</p>
+<h4 class="text-5xl font-headline font-black uppercase italic">Block</h4>
+</div>
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">gpp_bad</span>
+</div>
+<!-- Analysis Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface border-2 border-primary">
+<p class="text-[10px] font-black uppercase text-on-surface-variant mb-2 tracking-tighter">Confidence Score</p>
+<p class="text-3xl font-headline font-black">99.8%</p>
+<div class="w-full h-2 bg-surface-container-highest mt-2 border border-primary">
+<div class="h-full bg-secondary" style="width: 99.8%"></div>
+</div>
+</div>
+<div class="p-4 bg-surface border-2 border-primary">
+<p class="text-[10px] font-black uppercase text-on-surface-variant mb-2 tracking-tighter">Category</p>
+<p class="text-lg font-headline font-black uppercase">Jailbreak / DAN</p>
+<p class="text-[10px] opacity-60 mt-1 font-mono leading-none">RULE_ID: SG-449-ALPHA</p>
+</div>
+</div>
+<!-- Log Stream -->
+<div class="flex-1 bg-primary text-secondary p-4 font-mono text-sm overflow-hidden border-2 border-primary">
+<div class="flex items-center gap-2 mb-2 text-white border-b border-white/20 pb-1">
+<span class="material-symbols-outlined text-xs">analytics</span>
+<span class="text-[10px] uppercase font-bold">Heuristic Engine Logs</span>
+</div>
+<p class="opacity-80">[09:44:21] Initializing semantic scan...</p>
+<p class="opacity-80">[09:44:21] High entropy detected in prefix tokens.</p>
+<p class="text-white">[09:44:22] MATCH: 'Ignore all previous instructions' pattern found.</p>
+<p class="text-white">[09:44:22] Vector distance below threshold: 0.142</p>
+<p class="text-secondary-fixed-dim">[09:44:22] ACTION: INTERCEPT_AND_REDIRECT</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<div class="md:col-span-2 p-8 bg-surface border-4 border-primary neo-shadow flex items-end justify-between overflow-hidden relative group">
+<div class="relative z-10">
+<p class="text-7xl font-headline font-black italic">14ms</p>
+<p class="font-headline font-bold uppercase tracking-widest text-xl">Avg Latency</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:rotate-12 transition-transform">
+<span class="material-symbols-outlined text-[120px]">bolt</span>
+</div>
+</div>
+<div class="p-8 bg-primary-container border-4 border-primary neo-shadow flex flex-col justify-center">
+<p class="text-5xl font-headline font-black">4.2k</p>
+<p class="font-headline font-bold uppercase text-xs">Sims Today</p>
+</div>
+<div class="p-8 bg-tertiary-container border-4 border-primary neo-shadow flex flex-col justify-center">
+<p class="text-5xl font-headline font-black">0.0%</p>
+<p class="font-headline font-bold uppercase text-xs">Bypass Rate</p>
+</div>
+</section>
+<!-- Dynamic Background Elements (Static representations of geometric shifts) -->
+<div class="fixed top-[15%] right-[5%] -z-10 w-64 h-64 border-4 border-primary/10 rotate-12 flex items-center justify-center">
+<div class="w-32 h-32 border-4 border-primary/10 -rotate-45"></div>
+</div>
+<div class="fixed bottom-[10%] left-[20%] -z-10 w-96 h-24 bg-primary/5 -skew-x-12"></div>
+<div class="fixed top-[40%] left-[30%] -z-10 w-4 h-[614px] bg-secondary/10"></div>
+</main>
+<!-- Footer Meta -->
+<footer class="ml-64 p-8 border-t-4 border-primary flex items-center justify-between">
+<div class="font-headline font-black uppercase italic text-2xl">
+            ShieldProxy <span class="not-italic text-sm opacity-50 ml-2">© 2024</span>
+</div>
+<div class="flex gap-8 font-headline font-bold uppercase text-xs">
+<a class="hover:text-tertiary transition-colors" href="#">Documentation</a>
+<a class="hover:text-tertiary transition-colors" href="#">API Keys</a>
+<a class="hover:text-tertiary transition-colors" href="#">Vulnerability Disclosure</a>
+</div>
+</footer>
+</body></html>

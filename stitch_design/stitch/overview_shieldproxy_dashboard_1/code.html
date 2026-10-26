@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy | Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed-dim": "#ffb3ab",
+              "surface-container-high": "#e8e3da",
+              "inverse-primary": "#f5f0e8",
+              "on-surface-variant": "#4a4a4a",
+              "secondary-fixed": "#ffdad6",
+              "on-primary-fixed": "#1a1a1a",
+              "tertiary-fixed-dim": "#a8c6ff",
+              "surface": "#f5f0e8",
+              "on-tertiary-container": "#1a1a1a",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#1a1a1a",
+              "on-tertiary-fixed": "#1a1a1a",
+              "surface-dim": "#d6d1c9",
+              "surface-container": "#eee9e0",
+              "primary": "#1a1a1a",
+              "secondary-container": "#ffdad6",
+              "tertiary-fixed": "#d6e3ff",
+              "surface-bright": "#faf7f2",
+              "surface-container-highest": "#e2ddd4",
+              "surface-container-low": "#f2ede5",
+              "outline": "#1a1a1a",
+              "on-secondary": "#1a1a1a",
+              "on-primary-container": "#1a1a1a",
+              "inverse-on-surface": "#f5f0e8",
+              "background": "#f5f0e8",
+              "tertiary": "#0055ff",
+              "surface-tint": "#1a1a1a",
+              "on-background": "#1a1a1a",
+              "on-secondary-fixed": "#1a1a1a",
+              "secondary": "#e63b2e",
+              "primary-fixed": "#ffcc00",
+              "outline-variant": "#d0cbc3",
+              "primary-fixed-dim": "#e6b800",
+              "error": "#cc0000",
+              "tertiary-container": "#d6e3ff",
+              "on-error": "#ffffff",
+              "surface-variant": "#e8e3da",
+              "primary-container": "#ffcc00",
+              "on-primary-fixed-variant": "#1a1a1a",
+              "on-tertiary-fixed-variant": "#1a1a1a",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#1a1a1a",
+              "inverse-surface": "#1a1a1a",
+              "on-secondary-container": "#1a1a1a",
+              "error-container": "#ffdad6",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { cursor: crosshair; }
+        .neo-shadow { box-shadow: 4px 4px 0px 0px rgba(26,26,26,1); }
+        .neo-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(26,26,26,1); }
+        .neo-shadow-active { box-shadow: 0px 0px 0px 0px rgba(26,26,26,1); transform: translate(4px, 4px); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#f5f0e8] dark:bg-zinc-900 border-b-4 border-[#1a1a1a] dark:border-white shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+<div class="flex items-center gap-4">
+<span class="text-3xl font-black text-[#1a1a1a] dark:text-white uppercase italic font-headline">ShieldProxy</span>
+<div class="hidden md:flex items-center gap-6 ml-10">
+<a class="text-[#ffcc00] underline decoration-4 font-headline font-bold uppercase tracking-tighter transition-colors duration-75" href="#">Overview</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 font-headline font-bold uppercase tracking-tighter hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75" href="#">Analytics</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 font-headline font-bold uppercase tracking-tighter hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75" href="#">Simulator</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-primary text-on-primary px-3 py-1 flex items-center gap-2 border-2 border-primary font-headline font-bold uppercase text-xs">
+<span class="w-2 h-2 bg-primary-fixed rounded-full"></span>
+                System: 100% Operational
+            </div>
+<button class="material-symbols-outlined text-[#1a1a1a] dark:text-zinc-100 p-2 hover:bg-[#ffcc00] transition-colors" data-icon="sensors">sensors</button>
+<button class="material-symbols-outlined text-[#1a1a1a] dark:text-zinc-100 p-2 hover:bg-[#ffcc00] transition-colors" data-icon="account_circle">account_circle</button>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-80px)] z-40 flex flex-col pt-8 bg-[#f5f0e8] dark:bg-zinc-900 border-r-4 border-[#1a1a1a] dark:border-white w-64 hidden md:flex">
+<div class="px-6 mb-8">
+<h2 class="text-xl font-black text-[#1a1a1a] font-headline uppercase">System Active</h2>
+<p class="text-xs font-bold uppercase opacity-60">Shielding LLMs</p>
+</div>
+<nav class="flex-1">
+<div class="bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] flex items-center p-4 m-2 hover:skew-x-2 transition-all cursor-pointer">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-headline font-bold uppercase">Overview</span>
+</div>
+<div class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2 cursor-pointer">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+<span class="font-headline font-bold uppercase">Clients</span>
+</div>
+<div class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2 cursor-pointer">
+<span class="material-symbols-outlined mr-3" data-icon="warning">warning</span>
+<span class="font-headline font-bold uppercase">Alerts</span>
+</div>
+<div class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2 cursor-pointer">
+<span class="material-symbols-outlined mr-3" data-icon="analytics">analytics</span>
+<span class="font-headline font-bold uppercase">Analytics</span>
+</div>
+<div class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2 cursor-pointer">
+<span class="material-symbols-outlined mr-3" data-icon="security">security</span>
+<span class="font-headline font-bold uppercase">Simulator</span>
+</div>
+</nav>
+<div class="p-4">
+<button class="w-full bg-secondary text-on-secondary font-headline font-black uppercase py-4 border-4 border-primary neo-shadow active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+                New Policy
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 mt-20 p-8 min-h-screen">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Headline Section -->
+<div class="flex justify-between items-end border-b-4 border-primary pb-4">
+<div>
+<h1 class="text-6xl font-black font-headline uppercase leading-none">Security<br/>Dashboard</h1>
+<p class="mt-2 font-bold uppercase text-tertiary">Real-time LLM Protection layer</p>
+</div>
+<div class="hidden lg:block">
+<div class="flex gap-2">
+<div class="w-12 h-12 border-4 border-primary bg-primary-fixed"></div>
+<div class="w-12 h-12 border-4 border-primary bg-secondary"></div>
+<div class="w-12 h-12 border-4 border-primary bg-tertiary"></div>
+</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Total Requests -->
+<div class="bg-surface-container border-4 border-primary p-6 neo-shadow">
+<div class="flex justify-between items-start">
+<p class="font-headline font-bold uppercase text-sm tracking-widest">Total Requests</p>
+<span class="material-symbols-outlined text-tertiary" data-icon="reorder">reorder</span>
+</div>
+<p class="text-5xl font-black font-headline mt-4">1,204,922</p>
+<p class="text-xs font-bold text-tertiary mt-2">+12.5% VS LAST 24H</p>
+</div>
+<!-- Threats Blocked -->
+<div class="bg-primary-container border-4 border-primary p-6 neo-shadow flex items-center justify-between">
+<div>
+<p class="font-headline font-bold uppercase text-sm tracking-widest">Threats Blocked</p>
+<p class="text-5xl font-black font-headline mt-4">42,081</p>
+</div>
+<div class="relative w-20 h-20 flex items-center justify-center border-4 border-primary bg-background rounded-full">
+<span class="text-xs font-black font-headline">3.5%</span>
+<div class="absolute inset-0 border-4 border-secondary rounded-full border-t-transparent -rotate-45"></div>
+</div>
+</div>
+<!-- Avg Latency -->
+<div class="bg-surface-container border-4 border-primary p-6 neo-shadow">
+<p class="font-headline font-bold uppercase text-sm tracking-widest">Avg Latency (ms)</p>
+<p class="text-5xl font-black font-headline mt-4">142</p>
+<div class="w-full bg-primary h-2 mt-4 flex">
+<div class="bg-tertiary w-3/4"></div>
+</div>
+</div>
+<!-- Active Clients -->
+<div class="bg-surface-container border-4 border-primary p-6 neo-shadow">
+<p class="font-headline font-bold uppercase text-sm tracking-widest">Active Clients</p>
+<p class="text-5xl font-black font-headline mt-4">84</p>
+<div class="flex -space-x-2 mt-4">
+<div class="w-8 h-8 bg-tertiary border-2 border-primary"></div>
+<div class="w-8 h-8 bg-secondary border-2 border-primary"></div>
+<div class="w-8 h-8 bg-primary-fixed border-2 border-primary"></div>
+<div class="w-8 h-8 bg-on-surface border-2 border-primary flex items-center justify-center text-[10px] text-white font-bold">+81</div>
+</div>
+</div>
+</div>
+<!-- Main Data Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Live Feed Table -->
+<div class="lg:col-span-2 space-y-4">
+<div class="flex justify-between items-center bg-primary text-on-primary p-4">
+<h3 class="font-headline font-black uppercase text-xl">Live Interception Feed</h3>
+<span class="flex items-center gap-2 text-xs font-bold animate-pulse">
+<span class="w-2 h-2 bg-primary-fixed rounded-full"></span> LIVE STREAMING
+                        </span>
+</div>
+<div class="bg-surface border-4 border-primary neo-shadow overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b-4 border-primary bg-surface-container-high">
+<th class="p-4 font-headline font-black uppercase text-xs">Timestamp</th>
+<th class="p-4 font-headline font-black uppercase text-xs">Client IP</th>
+<th class="p-4 font-headline font-black uppercase text-xs">Prompt Snippet</th>
+<th class="p-4 font-headline font-black uppercase text-xs">Verdict</th>
+<th class="p-4 font-headline font-black uppercase text-xs">Category</th>
+</tr>
+</thead>
+<tbody class="font-bold text-sm">
+<tr class="border-b-2 border-primary hover:bg-surface-container transition-colors">
+<td class="p-4 font-mono text-xs">14:22:01.04</td>
+<td class="p-4">192.168.1.42</td>
+<td class="p-4 truncate max-w-[150px]">"ignore previous instructions and..."</td>
+<td class="p-4"><span class="bg-secondary text-on-secondary px-2 py-1 uppercase text-[10px] font-black border-2 border-primary">Blocked</span></td>
+<td class="p-4 uppercase text-xs">Prompt Injection</td>
+</tr>
+<tr class="border-b-2 border-primary hover:bg-surface-container transition-colors">
+<td class="p-4 font-mono text-xs">14:21:58.22</td>
+<td class="p-4">45.22.112.8</td>
+<td class="p-4 truncate max-w-[150px]">"Generate a report on market..."</td>
+<td class="p-4"><span class="bg-tertiary text-white px-2 py-1 uppercase text-[10px] font-black border-2 border-primary">Pass</span></td>
+<td class="p-4 uppercase text-xs">General Query</td>
+</tr>
+<tr class="border-b-2 border-primary hover:bg-surface-container transition-colors">
+<td class="p-4 font-mono text-xs">14:21:44.15</td>
+<td class="p-4">88.10.231.4</td>
+<td class="p-4 truncate max-w-[150px]">"Extract all user email addresses..."</td>
+<td class="p-4"><span class="bg-secondary text-on-secondary px-2 py-1 uppercase text-[10px] font-black border-2 border-primary">Blocked</span></td>
+<td class="p-4 uppercase text-xs">PII Leakage</td>
+</tr>
+<tr class="border-b-2 border-primary hover:bg-surface-container transition-colors">
+<td class="p-4 font-mono text-xs">14:21:32.09</td>
+<td class="p-4">192.168.1.12</td>
+<td class="p-4 truncate max-w-[150px]">"Translate the following text to..."</td>
+<td class="p-4"><span class="bg-tertiary text-white px-2 py-1 uppercase text-[10px] font-black border-2 border-primary">Pass</span></td>
+<td class="p-4 uppercase text-xs">Translation</td>
+</tr>
+<tr class="border-b-2 border-primary hover:bg-surface-container transition-colors">
+<td class="p-4 font-mono text-xs">14:20:55.33</td>
+<td class="p-4">201.44.5.18</td>
+<td class="p-4 truncate max-w-[150px]">"How do I bypass the firewall..."</td>
+<td class="p-4"><span class="bg-secondary text-on-secondary px-2 py-1 uppercase text-[10px] font-black border-2 border-primary">Blocked</span></td>
+<td class="p-4 uppercase text-xs">Malicious Intent</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Threat Distribution & Actions -->
+<div class="space-y-8">
+<!-- Pie Chart Replacement (Neo-Brutalist Styling) -->
+<div class="bg-surface border-4 border-primary p-6 neo-shadow">
+<h3 class="font-headline font-black uppercase text-xl mb-6">Threat Distribution</h3>
+<div class="relative w-48 h-48 mx-auto">
+<!-- SVG Pie Chart -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#ffcc00" stroke-dasharray="251.32" stroke-dashoffset="0" stroke-width="20"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#e63b2e" stroke-dasharray="251.32" stroke-dashoffset="100.5" stroke-width="20"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#0055ff" stroke-dasharray="251.32" stroke-dashoffset="180.9" stroke-width="20"></circle>
+<!-- Borders (Fake) -->
+<circle cx="50" cy="50" fill="none" r="50" stroke="#1a1a1a" stroke-width="4"></circle>
+</svg>
+</div>
+<div class="mt-8 grid grid-cols-1 gap-2">
+<div class="flex items-center gap-3">
+<div class="w-4 h-4 bg-primary-fixed border-2 border-primary"></div>
+<span class="font-headline font-bold uppercase text-xs">Prompt Injection (40%)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-4 h-4 bg-secondary border-2 border-primary"></div>
+<span class="font-headline font-bold uppercase text-xs">PII Leakage (32%)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-4 h-4 bg-tertiary border-2 border-primary"></div>
+<span class="font-headline font-bold uppercase text-xs">Malicious Intent (28%)</span>
+</div>
+</div>
+</div>
+<!-- System Status Card -->
+<div class="bg-on-surface text-background p-6 border-4 border-primary neo-shadow">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-primary-fixed text-4xl" data-icon="shield_with_heart" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<div>
+<h4 class="font-headline font-black uppercase text-lg">System Integrity</h4>
+<p class="text-[10px] font-bold uppercase text-surface-variant">Validated via ProxyNode v4.2</p>
+</div>
+</div>
+<div class="h-4 w-full bg-surface-container border-2 border-primary mb-4 overflow-hidden">
+<div class="h-full bg-primary-fixed w-full"></div>
+</div>
+<button class="w-full bg-tertiary text-white font-headline font-black uppercase py-2 border-4 border-primary hover:bg-[#0044cc] transition-colors">
+                            Full Audit Report
+                        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Section - Asymmetric Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+<div class="bg-surface-variant border-4 border-primary p-8 neo-shadow relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-4xl font-black font-headline uppercase italic">Traffic Map</h3>
+<p class="mt-2 font-bold max-w-xs">Global interception points and node performance metrics.</p>
+<button class="mt-6 border-4 border-primary bg-primary-container font-black px-6 py-2 uppercase hover:skew-x-2 transition-transform">Expand Map</button>
+</div>
+<div class="absolute right-0 top-0 opacity-10 pointer-events-none transform translate-x-10 -translate-y-10">
+<span class="material-symbols-outlined text-[200px]" data-icon="public">public</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="border-4 border-primary p-4 bg-white hover:bg-primary-fixed transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl mb-2" data-icon="settings">settings</span>
+<p class="font-headline font-black uppercase text-sm">Proxy Settings</p>
+</div>
+<div class="border-4 border-primary p-4 bg-white hover:bg-secondary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl mb-2" data-icon="history">history</span>
+<p class="font-headline font-black uppercase text-sm">Policy Logs</p>
+</div>
+<div class="border-4 border-primary p-4 bg-white hover:bg-tertiary hover:text-white transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl mb-2" data-icon="dns">dns</span>
+<p class="font-headline font-black uppercase text-sm">Node Status</p>
+</div>
+<div class="border-4 border-primary p-4 bg-primary text-on-primary hover:bg-primary-fixed hover:text-on-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl mb-2" data-icon="add_box">add_box</span>
+<p class="font-headline font-black uppercase text-sm">New Client</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB - Suppression Logic: Shown on Dashboard -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary-fixed text-on-primary border-4 border-primary rounded-none neo-shadow-lg flex items-center justify-center hover:neo-shadow active:neo-shadow-active transition-all z-50">
+<span class="material-symbols-outlined text-4xl" data-icon="add">add</span>
+</button>
+</body></html>

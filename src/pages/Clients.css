@@ -1,0 +1,114 @@
+/* ═══════════════════════════════════════════
+   CLIENTS PAGE
+   ═══════════════════════════════════════════ */
+
+.clients__count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--neon-purple-dim);
+  color: var(--neon-purple);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.clients__search {
+  margin-bottom: 20px;
+  max-width: 360px;
+}
+
+.clients__table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.clients__id {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--neon-purple);
+}
+
+.clients__api-key {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.clients__block-rate {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.clients__block-rate-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.clients__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clients__row:hover {
+  background: rgba(139, 92, 246, 0.04) !important;
+}
+
+/* Expanded Row */
+.clients__expanded-row td {
+  background: rgba(0, 0, 0, 0.2) !important;
+  padding: 0 !important;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.clients__expanded {
+  padding: 16px 20px;
+  animation: slide-in-top 0.3s ease;
+}
+
+.clients__expanded h4 {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.clients__expanded-stats {
+  display: flex;
+  gap: 24px;
+}
+
+.clients__expanded-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.clients__expanded-stat-label {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.clients__expanded-stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}

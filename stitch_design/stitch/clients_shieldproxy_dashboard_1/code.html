@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy - Clients</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "surface-container-high": "#e8e3da",
+                        "inverse-primary": "#f5f0e8",
+                        "on-surface-variant": "#4a4a4a",
+                        "secondary-fixed": "#ffdad6",
+                        "on-primary-fixed": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "surface": "#f5f0e8",
+                        "on-tertiary-container": "#1a1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1a1a",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "surface-dim": "#d6d1c9",
+                        "surface-container": "#eee9e0",
+                        "primary": "#1a1a1a",
+                        "secondary-container": "#ffdad6",
+                        "tertiary-fixed": "#d6e3ff",
+                        "surface-bright": "#faf7f2",
+                        "surface-container-highest": "#e2ddd4",
+                        "surface-container-low": "#f2ede5",
+                        "outline": "#1a1a1a",
+                        "on-secondary": "#1a1a1a",
+                        "on-primary-container": "#1a1a1a",
+                        "inverse-on-surface": "#f5f0e8",
+                        "background": "#f5f0e8",
+                        "tertiary": "#0055ff",
+                        "surface-tint": "#1a1a1a",
+                        "on-background": "#1a1a1a",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "secondary": "#e63b2e",
+                        "primary-fixed": "#ffcc00",
+                        "outline-variant": "#d0cbc3",
+                        "primary-fixed-dim": "#e6b800",
+                        "error": "#cc0000",
+                        "tertiary-container": "#d6e3ff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e8e3da",
+                        "primary-container": "#ffcc00",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "on-secondary-container": "#1a1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neo-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(26, 26, 26, 1);
+        }
+        .neo-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(26, 26, 26, 1);
+        }
+        .interactive-row:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #ffcc00;
+        }
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f0e8;
+            border-left: 2px solid #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border: 2px solid #f5f0e8;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background selection:bg-primary-container">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#f5f0e8] dark:bg-zinc-900 border-b-4 border-[#1a1a1a] dark:border-white shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+<div class="flex items-center gap-4">
+<span class="text-3xl font-black text-[#1a1a1a] dark:text-white uppercase italic tracking-tighter">ShieldProxy</span>
+</div>
+<div class="flex items-center gap-8">
+<nav class="hidden md:flex gap-6 font-['Space_Grotesk'] font-bold uppercase tracking-tighter">
+<a class="text-[#1a1a1a] dark:text-zinc-300 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Overview</a>
+<a class="text-[#ffcc00] underline decoration-4 px-2" href="#">Clients</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Alerts</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Analytics</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-2xl p-2 border-2 border-transparent hover:border-black active:translate-x-1 active:translate-y-1">sensors</button>
+<button class="material-symbols-outlined text-2xl p-2 border-2 border-transparent hover:border-black active:translate-x-1 active:translate-y-1">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-80px)] z-40 flex flex-col pt-8 bg-[#f5f0e8] dark:bg-zinc-900 border-r-4 border-[#1a1a1a] dark:border-white w-64 hidden md:flex">
+<div class="px-6 mb-8">
+<h2 class="font-['Space_Grotesk'] font-black text-xl text-[#1a1a1a] uppercase leading-none">System Active</h2>
+<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Shielding LLMs</p>
+</div>
+<nav class="flex-1 font-['Space_Grotesk'] font-bold uppercase">
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<a class="bg-[#ffcc00] text-[#1a1a1a] border-2 border-[#1a1a1a] flex items-center p-4 m-2 hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+                Clients
+            </a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="warning">warning</span>
+                Alerts
+            </a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="analytics">analytics</span>
+                Analytics
+            </a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 flex items-center p-4 m-2 hover:bg-[#0055ff] hover:text-white transition-all hover:skew-x-2" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="security">security</span>
+                Simulator
+            </a>
+</nav>
+<div class="p-4">
+<button class="w-full bg-secondary text-white font-black uppercase py-4 border-2 border-black neo-shadow hover:bg-black transition-all active:translate-x-1 active:translate-y-1 active:shadow-none">
+                New Policy
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-28 pb-12 px-8 min-h-screen">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+<div>
+<h1 class="font-headline font-black text-6xl md:text-8xl uppercase tracking-tighter leading-[0.85] mb-4">
+                    Managed<br/><span class="text-tertiary">Clients</span>
+</h1>
+<p class="max-w-md font-medium text-lg leading-snug">
+                    Real-time monitoring and access control for all authorized downstream LLM consumers and API integrations.
+                </p>
+</div>
+<button class="bg-primary-container text-primary font-headline font-black text-2xl uppercase px-8 py-6 border-4 border-black neo-shadow-lg hover:bg-white transition-all active:translate-x-2 active:translate-y-2 active:shadow-none flex items-center gap-3">
+<span class="material-symbols-outlined font-black" style="font-variation-settings: 'FILL' 1;">add_box</span>
+                New Client
+            </button>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Summary Stats -->
+<div class="lg:col-span-4 flex flex-col gap-8">
+<div class="bg-white border-4 border-black p-6 neo-shadow">
+<span class="text-xs font-black uppercase tracking-widest text-zinc-500 block mb-2">Total Monthly Requests</span>
+<div class="font-headline font-black text-6xl tracking-tighter text-black">1.42M</div>
+<div class="flex items-center gap-2 text-green-600 font-bold mt-2">
+<span class="material-symbols-outlined">trending_up</span>
+<span>+12.4% vs last month</span>
+</div>
+</div>
+<div class="bg-secondary text-white border-4 border-black p-6 neo-shadow">
+<span class="text-xs font-black uppercase tracking-widest text-white/70 block mb-2">Avg. Block Rate</span>
+<div class="font-headline font-black text-6xl tracking-tighter">4.2%</div>
+<div class="flex items-center gap-2 text-white font-bold mt-2">
+<span class="material-symbols-outlined">security</span>
+<span>12.4k threats mitigated</span>
+</div>
+</div>
+<div class="bg-tertiary text-white border-4 border-black p-6 neo-shadow">
+<span class="text-xs font-black uppercase tracking-widest text-white/70 block mb-2">Active API Keys</span>
+<div class="font-headline font-black text-6xl tracking-tighter">42</div>
+<div class="flex items-center gap-2 text-white font-bold mt-2">
+<span class="material-symbols-outlined">key</span>
+<span>3 keys expiring soon</span>
+</div>
+</div>
+</div>
+<!-- Clients Table Card -->
+<div class="lg:col-span-8 bg-white border-4 border-black neo-shadow overflow-hidden">
+<div class="p-6 border-b-4 border-black flex justify-between items-center bg-[#f5f0e8]">
+<h3 class="font-headline font-black text-2xl uppercase tracking-tight">Active Client Registry</h3>
+<div class="flex gap-2">
+<button class="p-2 border-2 border-black hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 border-2 border-black hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-zinc-100 font-headline font-black text-sm uppercase border-b-4 border-black">
+<th class="p-6">Client / Identity</th>
+<th class="p-6">API Key</th>
+<th class="p-6 text-right">Req/Month</th>
+<th class="p-6 text-right">Block %</th>
+<th class="p-6 text-center">Status</th>
+</tr>
+</thead>
+<tbody class="font-medium">
+<!-- Row 1 -->
+<tr class="border-b-2 border-black interactive-row transition-all duration-75">
+<td class="p-6">
+<div class="font-headline font-bold text-lg">Acme Corp Frontend</div>
+<div class="text-xs font-bold text-zinc-500 font-headline uppercase">IP: 192.168.1.104</div>
+</td>
+<td class="p-6">
+<code class="bg-zinc-200 px-2 py-1 font-mono font-bold text-xs tracking-widest">sp_live_••••••••8x92</code>
+</td>
+<td class="p-6 text-right font-headline font-black text-xl">452,102</td>
+<td class="p-6 text-right font-headline font-black text-xl text-secondary">1.2%</td>
+<td class="p-6 text-center">
+<span class="bg-green-400 border-2 border-black px-3 py-1 text-xs font-black uppercase">Active</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b-2 border-black interactive-row transition-all duration-75">
+<td class="p-6">
+<div class="font-headline font-bold text-lg">Mobile App V2</div>
+<div class="text-xs font-bold text-zinc-500 font-headline uppercase">IP: Multiple (Dynamic)</div>
+</td>
+<td class="p-6">
+<code class="bg-zinc-200 px-2 py-1 font-mono font-bold text-xs tracking-widest">sp_live_••••••••3k11</code>
+</td>
+<td class="p-6 text-right font-headline font-black text-xl">891,420</td>
+<td class="p-6 text-right font-headline font-black text-xl text-secondary">6.8%</td>
+<td class="p-6 text-center">
+<span class="bg-green-400 border-2 border-black px-3 py-1 text-xs font-black uppercase">Active</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b-2 border-black interactive-row transition-all duration-75">
+<td class="p-6">
+<div class="font-headline font-bold text-lg">External Partner (Alpha)</div>
+<div class="text-xs font-bold text-zinc-500 font-headline uppercase">IP: 44.201.22.1</div>
+</td>
+<td class="p-6">
+<code class="bg-zinc-200 px-2 py-1 font-mono font-bold text-xs tracking-widest">sp_test_••••••••m0w9</code>
+</td>
+<td class="p-6 text-right font-headline font-black text-xl">12,500</td>
+<td class="p-6 text-right font-headline font-black text-xl text-secondary">0.0%</td>
+<td class="p-6 text-center">
+<span class="bg-primary-container border-2 border-black px-3 py-1 text-xs font-black uppercase">Testing</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="border-b-2 border-black interactive-row transition-all duration-75">
+<td class="p-6">
+<div class="font-headline font-bold text-lg">Internal Admin Bot</div>
+<div class="text-xs font-bold text-zinc-500 font-headline uppercase">IP: Localhost</div>
+</td>
+<td class="p-6">
+<code class="bg-zinc-200 px-2 py-1 font-mono font-bold text-xs tracking-widest">sp_live_••••••••pq74</code>
+</td>
+<td class="p-6 text-right font-headline font-black text-xl">2,105</td>
+<td class="p-6 text-right font-headline font-black text-xl text-secondary">15.2%</td>
+<td class="p-6 text-center">
+<span class="bg-secondary text-white border-2 border-black px-3 py-1 text-xs font-black uppercase">Throttled</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-zinc-100 flex justify-center border-t-4 border-black">
+<button class="font-headline font-black uppercase text-sm flex items-center gap-2 hover:underline">
+                        View All Clients
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Featured Section: Integration Visual -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-white border-4 border-black p-8 neo-shadow flex flex-col justify-center">
+<h4 class="font-headline font-black text-4xl uppercase mb-4 leading-none italic">Security<br/>Enforcement</h4>
+<p class="font-bold text-lg mb-6">Each client is governed by a strict Zero-Trust policy. Requests are sanitized and scrubbed of PII before reaching your models.</p>
+<div class="flex gap-4">
+<span class="bg-black text-white px-4 py-2 font-black uppercase text-xs">AES-256</span>
+<span class="bg-black text-white px-4 py-2 font-black uppercase text-xs">OAuth 2.0</span>
+<span class="bg-black text-white px-4 py-2 font-black uppercase text-xs">mTLS</span>
+</div>
+</div>
+<div class="h-80 border-4 border-black overflow-hidden neo-shadow relative">
+<img alt="abstract digital security visual" class="w-full h-full object-cover grayscale contrast-125" data-alt="abstract close-up of a high-tech computer server rack with glowing blue and green led lights in a dark data center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChkdfQkH2OX_LrBBt_S99o2xAIyKtH7C5GxhgN3KhGq8Owr_N-9VxxvfoFM2s8GYM_BmVLfM8mBf5jMmvhAL7oUjQGkYD0u8JPwi5KSa5aKgTFOT2ZomZnXB1lV11w3Ps6D188HYMQ3eYtO1sE9FjsyNR8KSfsL8QBai74njQ4Nq_HEEK9xuHba7Do3lu3RGi3JnJjQ6eoD7y27Wr32Du1gtTkkrQYqCpgqhD12QayDISmwEO56d5slGntD3uqHnKP8LCEVCx9lhY"/>
+<div class="absolute inset-0 bg-tertiary/20 mix-blend-multiply"></div>
+<div class="absolute bottom-4 left-4 bg-white border-2 border-black p-4 max-w-[200px]">
+<p class="font-black text-xs uppercase leading-tight">Infrastructure Health: 100% Secure Nodes</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal Overlay (Mocked state: visible for demonstration) -->
+<!-- In a real app, this would be hidden with 'hidden' class until triggered -->
+<div class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 hidden">
+<div class="bg-background border-4 border-black neo-shadow-lg w-full max-w-lg overflow-hidden">
+<div class="bg-primary-container p-6 border-b-4 border-black flex justify-between items-center">
+<h2 class="font-headline font-black text-3xl uppercase italic tracking-tighter text-black">Provision New Client</h2>
+<button class="material-symbols-outlined font-black text-3xl">close</button>
+</div>
+<div class="p-8 space-y-8">
+<div>
+<label class="block font-headline font-black uppercase text-sm mb-2">Client Identity / Name</label>
+<input class="w-full border-b-4 border-black bg-zinc-100 p-4 font-bold focus:bg-white outline-none" placeholder="e.g. Production Analytics Engine" type="text"/>
+</div>
+<div>
+<label class="block font-headline font-black uppercase text-sm mb-2">Access Level</label>
+<div class="grid grid-cols-2 gap-4">
+<button class="border-2 border-black p-4 font-black uppercase text-xs flex items-center justify-center gap-2 bg-[#ffcc00]">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                            Full Access
+                        </button>
+<button class="border-2 border-black p-4 font-black uppercase text-xs flex items-center justify-center gap-2 hover:bg-zinc-200">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                            Read Only
+                        </button>
+</div>
+</div>
+<div>
+<label class="block font-headline font-black uppercase text-sm mb-2">IP Restriction (Optional)</label>
+<input class="w-full border-b-4 border-black bg-zinc-100 p-4 font-bold focus:bg-white outline-none" placeholder="0.0.0.0/0" type="text"/>
+</div>
+<div class="flex gap-4 pt-4">
+<button class="flex-1 bg-black text-white font-headline font-black py-5 uppercase text-xl hover:bg-tertiary transition-colors border-2 border-black">Generate Key</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

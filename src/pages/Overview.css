@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════════
+   OVERVIEW PAGE
+   ═══════════════════════════════════════════ */
+
+.overview-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 60vh;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.overview__chart-card {
+  padding: 20px;
+}
+
+.overview__chart-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.overview__chart-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Pie Legend */
+.overview__pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.overview__pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.overview__pie-legend-item strong {
+  margin-left: auto;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.overview__pie-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Threats Table */
+.overview__threats-table {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+/* Chart Tooltip */
+.chart-tooltip {
+  background: rgba(8, 11, 20, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.chart-tooltip__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Live badge in page header */
+.page-header__live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--neon-green-dim);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--neon-green);
+  font-weight: 600;
+  text-transform: uppercase;
+}

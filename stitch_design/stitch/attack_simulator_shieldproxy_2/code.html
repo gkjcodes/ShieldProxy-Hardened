@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy - Attack Simulator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#c8d3ff",
+              "secondary": "#3155b7",
+              "primary-dim": "#004e9d",
+              "on-tertiary": "#ffeefc",
+              "on-background": "#212d51",
+              "tertiary": "#853d97",
+              "on-secondary": "#f1f2ff",
+              "surface-container-lowest": "#ffffff",
+              "error-container": "#fb5151",
+              "on-primary": "#eff2ff",
+              "on-tertiary-container": "#5e1470",
+              "secondary-fixed-dim": "#b1c2ff",
+              "on-secondary-container": "#143fa2",
+              "primary-fixed-dim": "#4693ff",
+              "secondary-fixed": "#c4d0ff",
+              "on-primary-fixed-variant": "#002b5c",
+              "on-primary-fixed": "#000000",
+              "background": "#f6f5ff",
+              "on-surface-variant": "#4f5a81",
+              "tertiary-dim": "#78308a",
+              "error": "#b31b25",
+              "surface-bright": "#f6f5ff",
+              "on-primary-container": "#00224b",
+              "primary-fixed": "#65a1ff",
+              "tertiary-fixed-dim": "#e190f0",
+              "surface-tint": "#005ab3",
+              "on-tertiary-fixed": "#400050",
+              "on-secondary-fixed": "#002c82",
+              "surface-container-low": "#eff0ff",
+              "on-secondary-fixed-variant": "#2349ac",
+              "on-error-container": "#570008",
+              "error-dim": "#9f0519",
+              "surface-variant": "#d4dbff",
+              "on-error": "#ffefee",
+              "tertiary-fixed": "#f09dff",
+              "outline": "#6a759e",
+              "on-surface": "#212d51",
+              "secondary-dim": "#2148ab",
+              "surface-container-highest": "#d4dbff",
+              "primary": "#005ab3",
+              "primary-container": "#65a1ff",
+              "secondary-container": "#c4d0ff",
+              "on-tertiary-fixed-variant": "#681f7a",
+              "inverse-on-surface": "#909bc6",
+              "inverse-primary": "#3e90ff",
+              "outline-variant": "#a0acd7",
+              "tertiary-container": "#f09dff",
+              "surface": "#f6f5ff",
+              "surface-container-high": "#dbe1ff",
+              "surface-container": "#e3e7ff",
+              "inverse-surface": "#000b2f"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- TopNavBar Shell -->
+<nav class="flex justify-between items-center px-6 h-16 w-full sticky top-0 z-40 bg-white dark:bg-slate-900 shadow-sm dark:shadow-none font-['Inter'] antialiased">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">ShieldProxy</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-1 rounded" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-1 rounded" href="#">Policies</a>
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 px-3 py-1" href="#">Simulator</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container rounded-lg border-none focus:ring-2 ring-primary text-sm w-64" placeholder="Search logs..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="User profile" class="h-full w-full object-cover" data-alt="close-up portrait of a professional woman with a confident smile in a modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9KgVmfYFx4MzYXnpkIJlgdXsBi6XsF_ycyTsgHBer-ylMeYPy7P3Gpe-PMGXpYkYdi3tqeChrMOi2K9AWV1gSORRPjjafFyqX4hIQK1ungEpNPnE97XLLpsv1qTp6Rhwk2ZGSI-xEt83dJFe8ENGQCCGTlVU4LFytHPFf8BBjWK4J3_UPJIz5Nj3G8Q7pqdmxSfDnxqZ96arVMycRDBjQ9qQAi1r8TYXAMLDnEzBpLtK0Zt76yXYR4O1vxwD_Yxkdyc5Iw044GRA"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-16 z-30 h-screen w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hidden md:flex">
+<div class="px-4 py-6">
+<div class="mb-8">
+<span class="text-lg font-black text-blue-700 dark:text-blue-500">ShieldProxy</span>
+<p class="text-xs text-outline">System Active</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] text-sm font-medium">Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-['Inter'] text-sm font-medium">Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Inter'] text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg cursor-pointer" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-['Inter'] text-sm font-medium">Simulator</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-4 space-y-1 border-t border-slate-200 dark:border-slate-800">
+<button class="w-full py-2.5 px-4 bg-primary text-on-primary rounded-lg font-semibold text-sm mb-4 active:scale-95 transition-transform">
+                New Policy
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 text-xs" href="#">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 text-xs" href="#">
+<span class="material-symbols-outlined text-sm">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 p-6 min-h-screen">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight text-on-background font-headline">Attack Simulator</h1>
+<p class="text-outline mt-1 font-body">Test your LLM firewall with adversarial prompts and bypass techniques.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        GATEWAY ACTIVE
+                    </span>
+<div class="h-8 border-r border-outline-variant mx-2"></div>
+<span class="text-sm font-medium text-on-surface-variant">Version 2.4.0-pro</span>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Challenge Selection (Left Rail) -->
+<div class="lg:col-span-4 space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-outline px-1">Challenge Templates</h3>
+<!-- Standard Jailbreak Card -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary transition-all group relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">lock_open</span>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-primary-container text-on-primary-container rounded">MEDIUM</span>
+</div>
+<h4 class="font-bold text-on-surface">Standard Jailbreak</h4>
+<p class="text-xs text-on-surface-variant mt-1">DAN 11.0 bypass with roleplay injection patterns.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl">psychology</span>
+</div>
+</button>
+<!-- Hinglish Injection Card -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary transition-all group relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-tertiary group-hover:scale-110 transition-transform">translate</span>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-tertiary-container text-on-tertiary-container rounded">HARD</span>
+</div>
+<h4 class="font-bold text-on-surface">Hinglish Injection</h4>
+<p class="text-xs text-on-surface-variant mt-1">Cross-lingual token manipulation using Romanized Hindi.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl">language</span>
+</div>
+</button>
+<!-- PII Leak Attempt Card -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary transition-all group relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">person_search</span>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded">CRITICAL</span>
+</div>
+<h4 class="font-bold text-on-surface">PII Leak Attempt</h4>
+<p class="text-xs text-on-surface-variant mt-1">Social engineering to extract internal system keys.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl">shield_person</span>
+</div>
+</button>
+</div>
+<!-- Central Testing Area -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Raw Prompt Section -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden flex flex-col min-h-[400px]">
+<div class="flex items-center justify-between px-4 py-3 bg-surface-container-low border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">terminal</span>
+<span class="text-xs font-bold text-on-surface uppercase tracking-tighter">Raw Prompt Editor</span>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 rounded hover:bg-surface-container text-outline transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+<button class="p-1.5 rounded hover:bg-surface-container text-outline transition-colors"><span class="material-symbols-outlined text-sm">restart_alt</span></button>
+</div>
+</div>
+<textarea class="flex-grow p-6 bg-transparent resize-none focus:ring-0 border-none font-mono text-sm leading-relaxed text-on-surface" placeholder="Enter your adversarial prompt here..."></textarea>
+<div class="p-4 border-t border-outline-variant flex justify-end bg-surface-container-low/30">
+<button class="bg-primary text-on-primary px-8 py-2.5 rounded-lg font-bold flex items-center gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all">
+<span>SIMULATE ATTACK</span>
+<span class="material-symbols-outlined text-sm">bolt</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Analysis Panel (Bottom Full Width or Side depending on content) -->
+<div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Verdict Card -->
+<div class="bg-error-container/10 border-2 border-error-container rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -top-6 -right-6 w-32 h-32 bg-error-container/10 rounded-full blur-3xl"></div>
+<div class="relative">
+<span class="text-[10px] font-black tracking-widest text-error-container uppercase mb-1 block">Final Verdict</span>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-4xl text-error-dim" style="font-variation-settings: 'FILL' 1;">gpp_bad</span>
+<h2 class="text-4xl font-black text-on-error-container">BLOCK</h2>
+</div>
+</div>
+<div class="mt-8">
+<div class="flex justify-between text-xs font-bold text-on-surface-variant mb-1">
+<span>CONFIDENCE SCORE</span>
+<span>98.4%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-error-container h-full w-[98.4%]"></div>
+</div>
+</div>
+</div>
+<!-- Heuristic Logs -->
+<div class="md:col-span-2 bg-inverse-surface text-white rounded-2xl p-6 font-mono text-xs overflow-hidden">
+<div class="flex items-center gap-2 mb-4 text-outline-variant border-b border-white/10 pb-2">
+<span class="material-symbols-outlined text-sm">list_alt</span>
+<span class="uppercase tracking-widest font-bold">Heuristic Engine Logs</span>
+</div>
+<div class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
+<div class="flex gap-4">
+<span class="text-emerald-400">[14:22:01]</span>
+<span class="text-white/60">INIT: Sanitizing input tokens...</span>
+</div>
+<div class="flex gap-4">
+<span class="text-emerald-400">[14:22:01]</span>
+<span class="text-white/90">SCAN: Adversarial pattern 'DAN_MODE' detected in layer 4.</span>
+</div>
+<div class="flex gap-4">
+<span class="text-emerald-400">[14:22:02]</span>
+<span class="text-red-400">WARN: Semantic intent overlap with Restricted_Category_A3.</span>
+</div>
+<div class="flex gap-4">
+<span class="text-emerald-400">[14:22:02]</span>
+<span class="text-white/90">CHECK: Language detector identified mix of 'en' and 'hi-Latn'.</span>
+</div>
+<div class="flex gap-4">
+<span class="text-emerald-400">[14:22:03]</span>
+<span class="text-error-container font-bold">EXIT: Threshold exceeded. Applying immediate block.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Footer Section -->
+<div class="lg:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 text-center">
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">Avg Latency</p>
+<p class="text-2xl font-black text-primary">142ms</p>
+<div class="flex items-center justify-center gap-1 text-[10px] text-emerald-600 mt-1">
+<span class="material-symbols-outlined text-xs">trending_down</span>
+<span>4% vs last session</span>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 text-center">
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">Bypass Rate</p>
+<p class="text-2xl font-black text-secondary">0.02%</p>
+<div class="flex items-center justify-center gap-1 text-[10px] text-emerald-600 mt-1">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+<span>Optimal Security</span>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 text-center">
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">Total Challenges</p>
+<p class="text-2xl font-black text-on-surface">1,482</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Simulated today</p>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-outline-variant/30 text-center">
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider mb-1">Heuristic Hits</p>
+<p class="text-2xl font-black text-tertiary">9,204</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Patterns matched</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Only for simulation initiation) -->
+<div class="fixed bottom-8 right-8 z-50 md:hidden">
+<button class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-2xl active:scale-90 transition-transform">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+</div>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-16 bg-white border-t border-slate-200 flex justify-around items-center px-4 z-50">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-blue-600">
+<span class="material-symbols-outlined text-2xl">terminal</span>
+<span class="text-[10px] font-medium">Simulator</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</nav>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy | Bauhaus LLM Firewall</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#ffb3ab",
+                        "surface-container-high": "#e8e3da",
+                        "inverse-primary": "#f5f0e8",
+                        "on-surface-variant": "#4a4a4a",
+                        "secondary-fixed": "#ffdad6",
+                        "on-primary-fixed": "#1a1a1a",
+                        "tertiary-fixed-dim": "#a8c6ff",
+                        "surface": "#f5f0e8",
+                        "on-tertiary-container": "#1a1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1a1a",
+                        "on-tertiary-fixed": "#1a1a1a",
+                        "surface-dim": "#d6d1c9",
+                        "surface-container": "#eee9e0",
+                        "primary": "#1a1a1a",
+                        "secondary-container": "#ffdad6",
+                        "tertiary-fixed": "#d6e3ff",
+                        "surface-bright": "#faf7f2",
+                        "surface-container-highest": "#e2ddd4",
+                        "surface-container-low": "#f2ede5",
+                        "outline": "#1a1a1a",
+                        "on-secondary": "#1a1a1a",
+                        "on-primary-container": "#1a1a1a",
+                        "inverse-on-surface": "#f5f0e8",
+                        "background": "#f5f0e8",
+                        "tertiary": "#0055ff",
+                        "surface-tint": "#1a1a1a",
+                        "on-background": "#1a1a1a",
+                        "on-secondary-fixed": "#1a1a1a",
+                        "secondary": "#e63b2e",
+                        "primary-fixed": "#ffcc00",
+                        "outline-variant": "#d0cbc3",
+                        "primary-fixed-dim": "#e6b800",
+                        "error": "#cc0000",
+                        "tertiary-container": "#d6e3ff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e8e3da",
+                        "primary-container": "#ffcc00",
+                        "on-primary-fixed-variant": "#1a1a1a",
+                        "on-tertiary-fixed-variant": "#1a1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#1a1a1a",
+                        "inverse-surface": "#1a1a1a",
+                        "on-secondary-container": "#1a1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            cursor: none;
+        }
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: #ffcc00;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out, width 0.2s, height 0.2s;
+        }
+        .hover-expand:hover ~ #custom-cursor {
+            transform: scale(3);
+            mix-blend-mode: difference;
+        }
+        .bauhaus-grid {
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .geometric-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            border: 4px solid #1a1a1a;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background selection:bg-primary-container">
+<div id="custom-cursor"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-[#f5f0e8] dark:bg-zinc-900 border-b-4 border-[#1a1a1a] shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]">
+<div class="flex items-center gap-4">
+<span class="text-3xl font-black text-[#1a1a1a] dark:text-white uppercase italic font-headline tracking-tighter hover:bg-[#ffcc00] transition-colors duration-75 px-2">ShieldProxy</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#ffcc00] underline decoration-4 font-headline font-bold uppercase tracking-tighter" href="#">Overview</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 font-headline font-bold uppercase tracking-tighter hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Clients</a>
+<a class="text-[#1a1a1a] dark:text-zinc-300 font-headline font-bold uppercase tracking-tighter hover:bg-[#ffcc00] hover:text-[#1a1a1a] transition-colors duration-75 px-2" href="#">Alerts</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#1a1a1a] text-2xl active:translate-x-1 active:translate-y-1">sensors</button>
+<button class="material-symbols-outlined text-[#1a1a1a] text-2xl active:translate-x-1 active:translate-y-1">account_circle</button>
+</div>
+</nav>
+<!-- Background Decoration -->
+<div class="geometric-bg bauhaus-grid">
+<div class="shape w-64 h-64 rounded-full top-20 left-[-10%] bg-primary-container"></div>
+<div class="shape w-96 h-96 top-[60%] right-[-5%] rotate-45 border-tertiary"></div>
+<div class="shape w-48 h-48 bottom-10 left-[20%] border-secondary"></div>
+</div>
+<main class="min-h-screen pt-20 flex flex-col md:flex-row">
+<!-- Left Side: Problem/Solution Content -->
+<section class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center gap-12">
+<div class="space-y-4">
+<span class="bg-secondary text-on-secondary px-4 py-1 font-headline font-black uppercase text-xl border-2 border-primary shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]">The Critical Gap</span>
+<h1 class="text-6xl md:text-8xl font-headline font-black uppercase leading-[0.9] tracking-tighter text-primary">
+                    Indian startups building AI are <span class="bg-primary text-background px-2">unprotected.</span>
+</h1>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div class="border-4 border-primary p-6 bg-surface shadow-[8px_8px_0px_0px_rgba(26,26,26,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+<h2 class="font-headline font-black text-3xl uppercase mb-2">Drop-in LLM firewall</h2>
+<p class="text-xl font-medium leading-tight">Integrate in minutes. Secure forever. The first perimeter defense built for modern foundational models.</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-primary-container border-4 border-primary p-6 shadow-[8px_8px_0px_0px_rgba(26,26,26,1)]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined font-black">bolt</span>
+<span class="font-headline font-black uppercase">USP</span>
+</div>
+<p class="text-2xl font-headline font-black uppercase leading-none">Hinglish-aware threat detection (&lt;50ms)</p>
+</div>
+<div class="bg-tertiary text-on-tertiary border-4 border-primary p-6 shadow-[8px_8px_0px_0px_rgba(26,26,26,1)]">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined font-black">security</span>
+<span class="font-headline font-black uppercase">Impact</span>
+</div>
+<p class="text-2xl font-headline font-black uppercase leading-none">Prevents 100% of jailbreaks</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<img class="w-24 h-24 border-4 border-primary grayscale hover:grayscale-0 transition-all object-cover" data-alt="abstract tech visualization of glowing circuit patterns in neon blue and yellow geometric Bauhaus style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpwZ5iS3k7HI0LAAhIdDa_fazdXIL6rMB7cRVGvleeqyENjPiFJRtgDxbJHbol_5459v7bbToInqXjtZ62861mL9HoH-DC84ktwhTPVKcvV63mFOd9moazrnE_f63x-rkqO2FTj1Jj4jMDRTH_pC3C5hr9PGGvbmiGagmil7j6pM68SvQskXzF29prCXu79McKjvjgxOgnBDtnsQMkG5n2ghSzZtlcr-87ifahvj7Ytoht6aQ2vBaSRdsdd078wWv9UvcoCY-xhIY"/>
+<div class="border-l-4 border-primary pl-4">
+<p class="font-headline font-bold uppercase tracking-widest text-sm italic">Trusted by the next generation of unicorns.</p>
+<p class="text-xs uppercase font-bold opacity-60">Verified security layer</p>
+</div>
+</div>
+</section>
+<!-- Right Side: Neo-Brutalist Login Card -->
+<section class="w-full md:w-1/2 p-8 md:p-16 flex items-center justify-center bg-primary-container/10 border-l-0 md:border-l-4 border-primary">
+<div class="w-full max-w-md bg-surface border-4 border-primary p-8 shadow-[16px_16px_0px_0px_rgba(26,26,26,1)] relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-secondary translate-x-12 -translate-y-12 rotate-45 border-4 border-primary"></div>
+<div class="mb-10 relative">
+<h3 class="text-5xl font-headline font-black uppercase italic leading-none mb-2">System Access</h3>
+<p class="font-headline font-bold uppercase tracking-tight text-on-surface/70">Initialize proxy connection</p>
+</div>
+<form class="space-y-8">
+<div class="space-y-2">
+<label class="font-headline font-black uppercase text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+                            Email Address
+                        </label>
+<input class="w-full bg-transparent border-b-4 border-primary focus:outline-none focus:bg-tertiary-container p-4 font-headline font-bold uppercase text-xl placeholder:opacity-30" placeholder="CTO@STARTUP.AI" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="font-headline font-black uppercase text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">key</span>
+                            API Key
+                        </label>
+<input class="w-full bg-transparent border-b-4 border-primary focus:outline-none focus:bg-tertiary-container p-4 font-headline font-bold uppercase text-xl placeholder:opacity-30" placeholder="••••••••••••" type="password"/>
+</div>
+<div class="pt-4 flex flex-col gap-4">
+<button class="w-full bg-primary text-background border-4 border-primary p-6 font-headline font-black uppercase text-2xl hover:bg-tertiary transition-colors active:translate-x-2 active:translate-y-2 active:shadow-none shadow-[8px_8px_0px_0px_rgba(0,85,255,1)]" type="submit">
+                            Enter Dashboard
+                        </button>
+<div class="flex justify-between items-center text-xs font-headline font-bold uppercase">
+<a class="hover:text-tertiary underline decoration-2" href="#">Forgot Credentials?</a>
+<a class="hover:text-tertiary underline decoration-2" href="#">Request Beta Access</a>
+</div>
+</div>
+</form>
+<div class="mt-12 pt-6 border-t-2 border-primary/20 flex items-center justify-between">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-primary object-cover" data-alt="portrait of a focused tech professional in a modern studio with dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmhDUOFN2XZN1kPgqPKTDSdZrnXC77dmAD7z5qdE3P44q_R_uHeFka1qUvdzslD0_MXC1fecmXxIgk-ubgXr6A_gRdIed27WQRtpAMiNqJtKzoz8QCNQWBtKfkChtfLrKImlrSQ5LZ6jmUBz6vTU3Z63_0e-Oh7xKb4U15_5iRV3o8wFinQHMRizlgYnmdYsJuiaApayCech91eJBUsUnEszberdGPwhPb70M9c79mXClAvDhNBHRwQsy6EjyG3oU_3jSK66QOLSo"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary object-cover" data-alt="portrait of a female software architect in professional setting with geometric background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Rp9Uklo7tIW5TtFntNSpeVSLVqBXj0OoczJCSDWew63YeMq_6wapN4vs4i4pimTskfFMpqNZ-M8z3PR6BkC__tmRVn0vAknG5tOifPCty2R_-LYf-rLR4ktz2TRmaY9GzekZhXG2EC4ItQ7A18f9SQpP04CbQy2fHhodCUkaaoMfVk7DxSvhNTxLVfXq6QbhRst7ZTu8jvaGI0QkBFtNyygdy0VXpxdIiix-RjBtW9Z4qnXcXuxxUxD0R3V-IMajpAVFXXBK088"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary object-cover" data-alt="close-up portrait of a developer in a dark room with blue screen glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg3vLDnk7cJMxO29lGbl_Qy2yL2rPS7R0BdIR-sbUHQ75b1pncxnidKFV-RdaSHMcErld8AuounxmMfuBOiQKR7WxeCtgW38rJXoawC4akeb2bYp2xe0lr2BfpI-fjjzGRpqiUmFPC4X0U3sxTCkz8Dwn3KwLVQVpiqJzLl-FVWtUXItGPGiStz4xeAnQBTgh2mwBEDU9babqZyennvGYqofORY2fcxY2hi8-aFttbp8TA8qGnr-KALoGGQgn6xF9W3A4Q_Wi8BMs"/>
+</div>
+<span class="text-[10px] font-headline font-black uppercase opacity-50 text-right">Monitoring 4.2M Requests / Hour</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Stats / SideNav Influence -->
+<footer class="fixed bottom-0 left-0 w-full z-40 px-6 py-4 flex flex-col md:flex-row justify-between items-center bg-primary text-background border-t-4 border-primary-container">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-primary-container animate-pulse"></span>
+<span class="font-headline font-bold uppercase text-xs tracking-widest">System Active</span>
+</div>
+<div class="hidden md:flex gap-4">
+<div class="flex flex-col">
+<span class="text-[8px] uppercase opacity-50">Latency</span>
+<span class="font-headline font-black text-xs uppercase">12.4ms avg</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[8px] uppercase opacity-50">Blocked</span>
+<span class="font-headline font-black text-xs uppercase">128.4k Total</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-2 md:mt-0">
+<span class="text-[10px] font-headline font-black uppercase italic">Shielding LLMs for the Indian ecosystem</span>
+<div class="bg-primary-container text-primary px-3 py-1 font-headline font-black text-xs uppercase border border-primary">New Policy Available</div>
+</div>
+</footer>
+<script>
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Hover expand logic
+        document.querySelectorAll('a, button, input').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(3)';
+                cursor.style.mixBlendMode = 'difference';
+                cursor.style.background = '#ffffff';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.mixBlendMode = 'normal';
+                cursor.style.background = '#ffcc00';
+            });
+        });
+    </script>
+</body></html>

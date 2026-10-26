@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy - Clients Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dim": "#c8d3ff",
+            "secondary": "#3155b7",
+            "primary-dim": "#004e9d",
+            "on-tertiary": "#ffeefc",
+            "on-background": "#212d51",
+            "tertiary": "#853d97",
+            "on-secondary": "#f1f2ff",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#fb5151",
+            "on-primary": "#eff2ff",
+            "on-tertiary-container": "#5e1470",
+            "secondary-fixed-dim": "#b1c2ff",
+            "on-secondary-container": "#143fa2",
+            "primary-fixed-dim": "#4693ff",
+            "secondary-fixed": "#c4d0ff",
+            "on-primary-fixed-variant": "#002b5c",
+            "on-primary-fixed": "#000000",
+            "background": "#f6f5ff",
+            "on-surface-variant": "#4f5a81",
+            "tertiary-dim": "#78308a",
+            "error": "#b31b25",
+            "surface-bright": "#f6f5ff",
+            "on-primary-container": "#00224b",
+            "primary-fixed": "#65a1ff",
+            "tertiary-fixed-dim": "#e190f0",
+            "surface-tint": "#005ab3",
+            "on-tertiary-fixed": "#400050",
+            "on-secondary-fixed": "#002c82",
+            "surface-container-low": "#eff0ff",
+            "on-secondary-fixed-variant": "#2349ac",
+            "on-error-container": "#570008",
+            "error-dim": "#9f0519",
+            "surface-variant": "#d4dbff",
+            "on-error": "#ffefee",
+            "tertiary-fixed": "#f09dff",
+            "outline": "#6a759e",
+            "on-surface": "#212d51",
+            "secondary-dim": "#2148ab",
+            "surface-container-highest": "#d4dbff",
+            "primary": "#005ab3",
+            "primary-container": "#65a1ff",
+            "secondary-container": "#c4d0ff",
+            "on-tertiary-fixed-variant": "#681f7a",
+            "inverse-on-surface": "#909bc6",
+            "inverse-primary": "#3e90ff",
+            "outline-variant": "#a0acd7",
+            "tertiary-container": "#f09dff",
+            "surface": "#f6f5ff",
+            "surface-container-high": "#dbe1ff",
+            "surface-container": "#e3e7ff",
+            "inverse-surface": "#000b2f"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #d4dbff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="bg-background font-body text-on-background antialiased overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation Shell -->
+<header class="bg-white dark:bg-slate-900 shadow-sm dark:shadow-none border-b border-slate-200 dark:border-slate-800 flex justify-between items-center px-6 h-16 w-full sticky top-0 z-40">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">ShieldProxy</span>
+<div class="hidden md:flex items-center gap-6 h-full">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors h-full flex items-center px-2" href="#">Overview</a>
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 font-medium h-full flex items-center px-2" href="#">Clients</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors h-full flex items-center px-2" href="#">Alerts</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors h-full flex items-center px-2" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 rounded-lg border-none bg-surface-container text-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Search clients..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-slate-500 hover:bg-slate-50 p-2 rounded-full transition-colors active:scale-95">notifications</button>
+<button class="material-symbols-outlined text-slate-500 hover:bg-slate-50 p-2 rounded-full transition-colors active:scale-95">settings</button>
+<div class="h-8 w-8 rounded-full bg-primary-container overflow-hidden border border-primary/20">
+<img alt="User profile" class="h-full w-full object-cover" data-alt="close up professional headshot of a smiling developer with glasses and casual tech attire, clean studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ7J8QV5p26bDgkM1MeyTLk1miP-YpxOEJVfYA9v75I28ydPc5UXd0EdsuUmMUyVB5wvGrc6WKIsIPXWDm4uoAJ1hpHUIbTcdMDo39enMBw3dkaEiIa_aCed1gJ1prISLdWRtxKJCQ4rUAoGsaLy-Ye0NgCbGtvHrgGowqg6DeqJfL7QArBl6g34uwRXhigipm4Ob4Ai-3DgjL_APcTTSqSGoIQl4UOXEo-QCXD_KZt27-hDlQEcJ_rQg9IBFd-BTxvj5vKdUdJ8I"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Side Navigation Shell -->
+<aside class="hidden md:flex h-full w-64 bg-slate-50 dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex-col pt-6 z-30 shrink-0">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<p class="text-sm font-black text-blue-700 dark:text-blue-500 leading-none">ShieldProxy</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">System Active</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-sm">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg cursor-pointer transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-medium text-sm">Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-medium text-sm">Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-medium text-sm">Simulator</span>
+</a>
+</nav>
+<div class="px-4 py-6 border-t border-slate-200 dark:border-slate-800 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:text-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:text-primary transition-colors text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span>Support</span>
+</a>
+<div class="mt-4 px-4">
+<button class="w-full py-2 px-4 bg-primary text-white rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all active:scale-95">New Policy</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-surface-bright custom-scrollbar">
+<div class="p-8 max-w-[1400px] mx-auto space-y-8">
+<!-- Header & Action Bar -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-black text-on-background tracking-tight">Clients Management</h1>
+<p class="text-on-surface-variant mt-1">Manage API credentials and monitor traffic for your connected applications.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant text-on-surface rounded-lg font-semibold hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-bold hover:brightness-110 transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined text-sm">person_add</span>
+<span>Add New Client</span>
+</button>
+</div>
+</div>
+<!-- Metric Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm col-span-1">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Active Clients</span>
+<span class="material-symbols-outlined text-primary bg-primary-container/20 p-2 rounded-lg">group</span>
+</div>
+<p class="text-3xl font-black text-on-background">1,284</p>
+<p class="text-xs text-green-600 mt-2 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+              +12.5% from last month
+            </p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm col-span-1">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Avg Block Rate</span>
+<span class="material-symbols-outlined text-error bg-error/10 p-2 rounded-lg">block</span>
+</div>
+<p class="text-3xl font-black text-on-background">2.4%</p>
+<p class="text-xs text-red-600 mt-2 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+              +0.3% security incidents
+            </p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm col-span-1 md:col-span-2 relative overflow-hidden">
+<div class="flex justify-between items-start z-10 relative">
+<div>
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Global Traffic Volume</span>
+<p class="text-3xl font-black text-on-background mt-2">42.8M</p>
+<p class="text-xs text-slate-500 mt-1 font-medium">Requests processed this month</p>
+</div>
+<div class="w-32 h-16 flex items-end gap-1">
+<div class="bg-primary/20 w-4 h-[40%] rounded-t-sm"></div>
+<div class="bg-primary/30 w-4 h-[60%] rounded-t-sm"></div>
+<div class="bg-primary/50 w-4 h-[80%] rounded-t-sm"></div>
+<div class="bg-primary w-4 h-[100%] rounded-t-sm"></div>
+<div class="bg-primary/70 w-4 h-[85%] rounded-t-sm"></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent -z-0"></div>
+</div>
+</div>
+<div class="flex flex-col xl:flex-row gap-6">
+<!-- Registry Table -->
+<div class="flex-1 bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
+<div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+<h2 class="font-bold text-on-background">Client Registry</h2>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400">Showing 1-10 of 1,284 clients</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50/50">
+<th class="px-6 py-3 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100">Client / App</th>
+<th class="px-6 py-3 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100">API Key</th>
+<th class="px-6 py-3 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100">Requests/mo</th>
+<th class="px-6 py-3 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100">Block Rate</th>
+<th class="px-6 py-3 text-[10px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100">Status</th>
+<th class="px-6 py-3 border-b border-slate-100"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container text-secondary font-bold flex items-center justify-center text-xs">MC</div>
+<div>
+<p class="font-bold text-sm">Main-Cluster-Prod</p>
+<p class="text-xs text-slate-500 italic">Production Environment</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-xs bg-surface-container-low px-2 py-1 rounded border border-outline-variant font-mono">sp_live_••••8x9c</code>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold">12,450,221</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-green-500 h-full w-[0.8%]"></div>
+</div>
+<span class="text-xs font-medium">0.8%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary-container text-tertiary font-bold flex items-center justify-center text-xs">OS</div>
+<div>
+<p class="font-bold text-sm">Oms-Staging</p>
+<p class="text-xs text-slate-500 italic">Internal Testing</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-xs bg-surface-container-low px-2 py-1 rounded border border-outline-variant font-mono">sp_test_••••a12z</code>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold">84,120</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-yellow-500 h-full w-[4.2%]"></div>
+</div>
+<span class="text-xs font-medium">4.2%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-error-container/20 text-error font-bold flex items-center justify-center text-xs">DA</div>
+<div>
+<p class="font-bold text-sm">Deprecated-App</p>
+<p class="text-xs text-slate-500 italic">Legacy Interface</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-xs bg-surface-container-low px-2 py-1 rounded border border-outline-variant font-mono">sp_live_••••99px</code>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold">0</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-slate-300 h-full w-0"></div>
+</div>
+<span class="text-xs font-medium">0.0%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 uppercase">Suspended</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container text-primary font-bold flex items-center justify-center text-xs">WA</div>
+<div>
+<p class="font-bold text-sm">Web-Analytics-V2</p>
+<p class="text-xs text-slate-500 italic">External Integration</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<code class="text-xs bg-surface-container-low px-2 py-1 rounded border border-outline-variant font-mono">sp_live_••••4k8l</code>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold">2,104,800</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-error h-full w-[12.5%]"></div>
+</div>
+<span class="text-xs font-medium text-error">12.5%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-slate-100 flex items-center justify-between">
+<button class="px-3 py-1 text-xs font-semibold text-slate-500 border border-slate-200 rounded hover:bg-slate-50">Previous</button>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center text-xs font-bold bg-primary text-white rounded">1</button>
+<button class="w-8 h-8 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-100 rounded">2</button>
+<button class="w-8 h-8 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-100 rounded">3</button>
+</div>
+<button class="px-3 py-1 text-xs font-semibold text-slate-500 border border-slate-200 rounded hover:bg-slate-50">Next</button>
+</div>
+</div>
+<!-- Right Sidebar Stats & Cards -->
+<div class="w-full xl:w-80 space-y-6">
+<!-- Monthly Request Stats -->
+<div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+<h3 class="font-bold text-on-background mb-4 flex items-center justify-between">
+                Usage Trends
+                <span class="material-symbols-outlined text-slate-400 text-lg">info</span>
+</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">API Usage (Quota)</span>
+<span class="font-bold text-primary">84%</span>
+</div>
+<div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-50">
+<div>
+<p class="text-[10px] font-black text-slate-500 uppercase">This Month</p>
+<p class="text-xl font-black text-on-background">42.8M</p>
+</div>
+<div>
+<p class="text-[10px] font-black text-slate-500 uppercase">Avg Daily</p>
+<p class="text-xl font-black text-on-background">1.4M</p>
+</div>
+</div>
+</div>
+<div class="mt-6 rounded-lg bg-surface-container-low p-4">
+<img alt="usage chart" class="w-full h-24 object-cover rounded" data-alt="minimalist area chart showing rising blue lines against a clean white background with subtle grid lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYvKy7TXQVTD5OGHWkrO336dMvsTJMgqo_uF6KvPMZhj0Efo9yQlWBeJVxrWw4WuxGCZGMHVt4sm8dbdzzPruWEWQthRFrAM3mzhEpTt7yT3g5Bb6nDDMoa6FAfvdzwB4hxKWpoV4VfvR2hiZ8zjH5FSWW7VyG8-ZMZ-vz-doxKffRVJighiOEN3GD9zXkZKZeq10UPDx9jHlyX9WSETyqQI6Qc_5A20hpDUCI26hHSqPrZuM9xWmOTJJ_hDHxjn6-DbNCDo-udak"/>
+</div>
+</div>
+<!-- Security Enforcement Card -->
+<div class="bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl p-6 text-white shadow-lg relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-blue-200 mb-4" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<h3 class="font-bold text-lg mb-2">Security Enforcement</h3>
+<p class="text-blue-100 text-sm mb-4">ShieldProxy automatically throttles clients exceeding their 99th percentile block rate.</p>
+<ul class="space-y-2 mb-6">
+<li class="flex items-center gap-2 text-xs">
+<span class="material-symbols-outlined text-[14px] text-green-400">check_circle</span>
+                    Rate Limiting Active
+                  </li>
+<li class="flex items-center gap-2 text-xs">
+<span class="material-symbols-outlined text-[14px] text-green-400">check_circle</span>
+                    IP Whitelisting Enabled
+                  </li>
+<li class="flex items-center gap-2 text-xs text-blue-200">
+<span class="material-symbols-outlined text-[14px]">radio_button_unchecked</span>
+                    JWT Validation (Opt-in)
+                  </li>
+</ul>
+<button class="w-full py-2 bg-white text-blue-800 rounded-lg font-bold text-sm hover:bg-blue-50 transition-colors">Configure Guardrails</button>
+</div>
+<!-- Decorative background element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-white/10 rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
+</div>
+<!-- Quick Tip -->
+<div class="bg-tertiary/10 border border-tertiary/20 rounded-xl p-4 flex gap-3">
+<span class="material-symbols-outlined text-tertiary">lightbulb</span>
+<div>
+<p class="text-xs font-bold text-tertiary">Pro Tip</p>
+<p class="text-xs text-on-tertiary-container mt-1">Rotate your API keys every 90 days to maintain optimal security posture for production clients.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden bg-white border-t border-slate-200 h-16 flex items-center justify-around px-4 sticky bottom-0 z-40">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Overview</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-[10px] font-bold">Clients</span>
+</button>
+<div class="relative -top-4">
+<button class="w-12 h-12 bg-primary rounded-full shadow-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-medium">Reports</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</nav>
+</body></html>

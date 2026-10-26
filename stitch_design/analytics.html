@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#c8d8f3",
+              "surface": "#0c0e10",
+              "surface-container-high": "#1d2023",
+              "surface-container": "#171a1c",
+              "inverse-surface": "#f9f9fc",
+              "inverse-primary": "#006d40",
+              "outline-variant": "#46484a",
+              "outline": "#747578",
+              "on-surface": "#f0f0f3",
+              "secondary-dim": "#00d4ec",
+              "surface-container-highest": "#232629",
+              "primary": "#a0ffc3",
+              "primary-container": "#00fc9b",
+              "on-tertiary-fixed-variant": "#46556b",
+              "secondary-container": "#006875",
+              "inverse-on-surface": "#535558",
+              "on-tertiary-fixed": "#29394e",
+              "tertiary-fixed-dim": "#bacae4",
+              "surface-tint": "#a0ffc3",
+              "surface-container-low": "#111416",
+              "on-secondary-fixed": "#003a42",
+              "error-dim": "#d7383b",
+              "on-secondary-fixed-variant": "#005964",
+              "on-error-container": "#ffa8a3",
+              "on-error": "#490006",
+              "surface-variant": "#232629",
+              "tertiary-fixed": "#c8d8f3",
+              "on-primary-fixed": "#004527",
+              "on-primary-fixed-variant": "#00653b",
+              "background": "#0c0e10",
+              "on-surface-variant": "#aaabae",
+              "tertiary-dim": "#bacae4",
+              "surface-bright": "#292c30",
+              "error": "#ff716c",
+              "primary-fixed": "#00fc9b",
+              "on-primary-container": "#005b34",
+              "error-container": "#9f0519",
+              "on-primary": "#00643a",
+              "on-tertiary-container": "#3c4c61",
+              "secondary-fixed-dim": "#00d7f0",
+              "on-secondary-container": "#e8fbff",
+              "primary-fixed-dim": "#00ec91",
+              "secondary-fixed": "#26e6ff",
+              "on-secondary": "#004d57",
+              "surface-container-lowest": "#000000",
+              "secondary": "#00e3fd",
+              "surface-dim": "#0c0e10",
+              "primary-dim": "#00ec91",
+              "on-tertiary": "#45546a",
+              "on-background": "#f0f0f3",
+              "tertiary": "#d7e6ff"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Space Grotesk"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: #0c0e10;
+        color: #f0f0f3;
+      }
+      .newsreader { font-family: 'Newsreader', serif; }
+      .space-grotesk { font-family: 'Space Grotesk', sans-serif; }
+      .glass-panel {
+        background: rgba(12, 14, 16, 0.6);
+        backdrop-filter: blur(40px);
+      }
+      .spectral-glow {
+        box-shadow: 0 0 15px rgba(160, 255, 195, 0.05);
+      }
+      .data-stream-bg {
+        background-image: radial-gradient(circle at 2px 2px, rgba(160, 255, 195, 0.03) 1px, transparent 0);
+        background-size: 40px 40px;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-surface selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- Sidebar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 border-r border-white/10 bg-[#0c0e10]/80 backdrop-blur-2xl z-50 flex flex-col">
+<div class="p-8">
+<h1 class="text-2xl font-normal italic font-serif text-[#00FF9D]">ShieldProxy</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 mt-1 font-mono">V-01 Secure Access</p>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 font-mono hover:bg-[#00FF9D]/5 hover:text-[#00FF9D] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-xs uppercase tracking-widest">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 font-mono hover:bg-[#00FF9D]/5 hover:text-[#00FF9D] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-xs uppercase tracking-widest">Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 font-mono hover:bg-[#00FF9D]/5 hover:text-[#00FF9D] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="text-xs uppercase tracking-widest">Alerts</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#00FF9D]/10 text-[#00FF9D] border-l-4 border-[#00FF9D]" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-xs uppercase tracking-widest">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 font-mono hover:bg-[#00FF9D]/5 hover:text-[#00FF9D] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+<span class="text-xs uppercase tracking-widest">Attack Simulator</span>
+</a>
+</nav>
+<div class="mt-auto p-4 border-t border-white/5 space-y-1">
+<button class="w-full bg-primary text-on-primary py-3 text-xs uppercase tracking-[0.2em] font-bold hover:shadow-[0_0_15px_rgba(160,255,195,0.4)] transition-all">
+                Authorize
+            </button>
+<div class="flex flex-col gap-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span class="text-[10px] uppercase tracking-widest">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span class="text-[10px] uppercase tracking-widest">Log Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Header Shell -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-[#0c0e10]/40 backdrop-blur-xl flex justify-between items-center px-8 py-4 border-b border-white/5">
+<div class="flex items-center gap-4">
+<h2 class="text-xl Newsreader italic text-[#f0f0f3]">Analytics Infrastructure</h2>
+<div class="h-4 w-px bg-white/10 mx-2"></div>
+<span class="text-[10px] font-mono text-secondary uppercase tracking-widest">Live Stream Active</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative flex items-center bg-surface-container-low px-4 py-2 border-b border-white/10 group focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-sm text-slate-500 mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-[10px] tracking-widest text-on-surface placeholder-slate-600 w-48" placeholder="FILTER THREATS..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-slate-400">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors" data-icon="history">history</span>
+<div class="w-8 h-8 bg-surface-container-high flex items-center justify-center border border-white/10">
+<img alt="Admin Avatar" class="w-6 h-6 grayscale brightness-125" data-alt="close-up minimalist profile portrait of a security expert in silhouette against a deep green back-light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO5XcEcIpPgvIgHU5ul7bYhkrXkKhFocAruEx37QbR1-1xkFIMFNZ41TUoSQd8Ed51FvsHtjC_xfkqwfDMT10eAamS3xc4r2rj3cYXimjScn2thbGq-BzMGXHSsm9MXmbqD1pd_sMi9AH_hKTn9oM-T9O0rseiB9IXZ-KgOK4eCsSjFlCPw3zUPP7SPIfzjj2XsmQ5-9v2neKChvn3uZWl2ktvX6uej4ucBDoOLwGA4QKIUKJZHhqjDjbEqVjj6xWUiVzZaZ8SiwY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-24 p-8 min-h-screen data-stream-bg">
+<!-- Hero Section -->
+<section class="mb-12 flex justify-between items-end gap-12">
+<div class="max-w-2xl">
+<h3 class="Newsreader text-5xl italic leading-tight mb-4 text-on-surface">
+                    Real-time <span class="text-primary">Intelligence</span> Spectrum
+                </h3>
+<p class="text-slate-400 max-w-lg leading-relaxed">
+                    Analyzing global request patterns and cryptographic anomalies. Every node is monitored; every latency spike is classified. Precision is the ultimate layer of defense.
+                </p>
+</div>
+<div class="flex gap-8 text-right font-mono">
+<div>
+<span class="block text-[10px] text-slate-500 uppercase tracking-widest mb-1">Total Throughput</span>
+<span class="text-3xl text-secondary">42.8 GB/s</span>
+</div>
+<div>
+<span class="block text-[10px] text-slate-500 uppercase tracking-widest mb-1">Threat Score</span>
+<span class="text-3xl text-error">0.024</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Analytics -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Request Volume Chart (8 cols) -->
+<div class="col-span-8 bg-surface-container-low p-8 relative spectral-glow border-l border-primary/20">
+<div class="flex justify-between items-start mb-12">
+<div>
+<h4 class="Newsreader text-2xl italic text-on-surface">Request Volume (24h)</h4>
+<p class="text-[10px] font-mono text-slate-500 uppercase tracking-tighter mt-1">Global scale ingestion monitoring</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-mono tracking-widest uppercase">Live</span>
+<span class="px-3 py-1 bg-surface-container-high text-slate-400 text-[10px] font-mono tracking-widest uppercase border border-white/5">Export CSV</span>
+</div>
+</div>
+<!-- Mock Ultra-Sleek Line Graph -->
+<div class="h-64 flex items-end gap-1 relative">
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="border-t border-slate-500 w-full"></div>
+<div class="border-t border-slate-500 w-full"></div>
+<div class="border-t border-slate-500 w-full"></div>
+<div class="border-t border-slate-500 w-full"></div>
+</div>
+<!-- Simplified Visual Graph Lines -->
+<svg class="absolute inset-0 h-full w-full" preserveaspectratio="none" viewbox="0 0 800 200">
+<path d="M0 180 Q 50 170, 100 160 T 200 140 T 300 100 T 400 120 T 500 40 T 600 80 T 700 30 T 800 50" fill="none" stroke="#a0ffc3" stroke-width="2"></path>
+<path d="M0 180 Q 50 170, 100 160 T 200 140 T 300 100 T 400 120 T 500 40 T 600 80 T 700 30 T 800 50 L 800 200 L 0 200 Z" fill="url(#emerald-gradient)" opacity="0.1"></path>
+<defs>
+<lineargradient id="emerald-gradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#a0ffc3"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- Indicators -->
+<div class="absolute right-10 top-10 flex items-center gap-2">
+<div class="w-3 h-3 bg-primary"></div>
+<span class="text-[10px] font-mono uppercase tracking-widest text-on-surface">Valid Requests</span>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-mono text-slate-600">
+<span>00:00</span><span>04:00</span><span>08:00</span><span>12:00</span><span>16:00</span><span>20:00</span>
+</div>
+</div>
+<!-- Latency Distribution (4 cols) -->
+<div class="col-span-4 bg-surface-container p-8 border border-white/5">
+<h4 class="Newsreader text-2xl italic text-on-surface mb-8">Latency Distribution</h4>
+<div class="space-y-6">
+<div class="flex items-end gap-1 h-32">
+<div class="flex-1 bg-primary/20 h-[20%]"></div>
+<div class="flex-1 bg-primary/40 h-[40%]"></div>
+<div class="flex-1 bg-primary/60 h-[75%]"></div>
+<div class="flex-1 bg-primary h-[95%]"></div>
+<div class="flex-1 bg-primary/80 h-[60%]"></div>
+<div class="flex-1 bg-primary/40 h-[30%]"></div>
+<div class="flex-1 bg-primary/20 h-[10%]"></div>
+<div class="flex-1 bg-primary/10 h-[5%]"></div>
+</div>
+<div class="pt-6 border-t border-white/10 space-y-4">
+<div class="flex justify-between font-mono">
+<span class="text-[10px] text-slate-500 uppercase tracking-widest">P99 Latency</span>
+<span class="text-sm text-secondary">24.5ms</span>
+</div>
+<div class="flex justify-between font-mono">
+<span class="text-[10px] text-slate-500 uppercase tracking-widest">Avg Response</span>
+<span class="text-sm text-primary">8.2ms</span>
+</div>
+<div class="flex justify-between font-mono">
+<span class="text-[10px] text-slate-500 uppercase tracking-widest">Jitter Range</span>
+<span class="text-sm text-on-surface">+/- 1.2ms</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Map (7 cols) -->
+<div class="col-span-7 bg-surface-container-low p-8 relative overflow-hidden h-[400px]">
+<div class="absolute top-8 left-8 z-10">
+<h4 class="Newsreader text-2xl italic text-on-surface">Geo-Distribution</h4>
+<p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Traffic Origin Heatmap</p>
+</div>
+<div class="w-full h-full opacity-60 grayscale brightness-50 contrast-150">
+<img alt="Global Heatmap" class="w-full h-full object-cover" data-alt="minimalist dark stylized world map with glowing emerald green data nodes and faint cyan connections between major cities" data-location="world" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjArDDaD89Mo9oMnCITfBwgv6O9bZsWOSRWSR-3PbDKcpLjkmwYKFhdqGmlJFqrNxusOjEUWXjXbqOTJXmj5c4qt5WixOKip6ggllJ6jGJsODmYVHPb69y68AYOOC9gHODFtLg5xffppm6p0mp4PpmQH--u7S5sWgvdSUHBO0ytgVKT3yQc6bFO4Xhxi_gqext5t9JiYuO4tlbeH_Ud_bnTfB4IdjsTAyQavSBBSRyX3GIx6S7ZVOhOOnjrQVskLtq_ht4VGieXvc"/>
+</div>
+<!-- Glowing Nodes overlay -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
+<div class="absolute top-1/3 left-1/4 w-3 h-3 bg-primary shadow-[0_0_15px_#a0ffc3] animate-pulse"></div>
+<div class="absolute top-1/2 left-1/2 w-2 h-2 bg-secondary shadow-[0_0_10px_#00e3fd] animate-pulse"></div>
+<div class="absolute bottom-1/3 right-1/4 w-4 h-4 bg-primary shadow-[0_0_20px_#a0ffc3] animate-pulse"></div>
+</div>
+</div>
+<!-- Attack Categories (5 cols) -->
+<div class="col-span-5 flex flex-col gap-6">
+<div class="flex-1 glass-panel p-8 border border-white/10 spectral-glow">
+<h4 class="Newsreader text-2xl italic text-on-surface mb-6">Attack Vectors</h4>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-[10px] font-mono uppercase tracking-widest mb-2">
+<span class="text-slate-400">SQL Injection</span>
+<span class="text-primary">42%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] font-mono uppercase tracking-widest mb-2">
+<span class="text-slate-400">Cross-Site Scripting</span>
+<span class="text-secondary">28%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary w-[28%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] font-mono uppercase tracking-widest mb-2">
+<span class="text-slate-400">Bot Interaction</span>
+<span class="text-error">15%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-error w-[15%] shadow-[0_0_8px_#ff716c]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] font-mono uppercase tracking-widest mb-2">
+<span class="text-slate-400">Credential Stuffing</span>
+<span class="text-on-surface">15%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-slate-500 w-[15%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Output Section -->
+<section class="mt-12 bg-surface-container-lowest p-6 border border-white/5 font-mono">
+<div class="flex justify-between items-center mb-4 pb-4 border-b border-white/5">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-[10px] uppercase tracking-[0.3em] text-slate-500">Live Infrastructure Logs</span>
+</div>
+<span class="text-[10px] text-slate-600">CONNECTED: US-EAST-01-CLUSTER</span>
+</div>
+<div class="space-y-2 text-[11px]">
+<p class="text-slate-500"><span class="text-primary">[14:22:01]</span> INBOUND: Handshake initialized from 192.168.1.1 (Stockholm, SE)</p>
+<p class="text-slate-500"><span class="text-primary">[14:22:03]</span> DECRYPT: Packet integrity verified via TLS 1.3 - ECDHE-RSA-AES256-GCM-SHA384</p>
+<p class="text-secondary"><span class="text-secondary">[14:22:04]</span> ALERT: Unusual request pattern detected on /v1/auth endpoint</p>
+<p class="text-slate-500"><span class="text-primary">[14:22:05]</span> ACTION: Redirecting to verification tunnel for deep packet inspection</p>
+<p class="text-slate-500"><span class="text-primary">[14:22:08]</span> STATUS: Request cleared. Latency: 4.2ms</p>
+</div>
+</section>
+</main>
+<!-- Contextual Details Tooltip (Decorative) -->
+<div class="fixed bottom-8 right-8 bg-surface-container-highest border border-primary/20 p-4 w-64 glass-panel spectral-glow">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="hub">hub</span>
+<span class="Newsreader italic text-sm text-on-surface">Node Health</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-[9px] uppercase tracking-widest text-slate-500">Stockholm</span>
+<span class="text-[10px] font-mono text-primary">OPTIONAL</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[9px] uppercase tracking-widest text-slate-500">New York</span>
+<span class="text-[10px] font-mono text-primary">STABLE</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[9px] uppercase tracking-widest text-slate-500">Singapore</span>
+<span class="text-[10px] font-mono text-secondary">LOAD_BALANCING</span>
+</div>
+</div>
+</div>
+</body></html>

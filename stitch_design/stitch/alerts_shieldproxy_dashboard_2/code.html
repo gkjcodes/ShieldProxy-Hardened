@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldProxy - Alerts Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dim": "#c8d3ff",
+            "secondary": "#3155b7",
+            "primary-dim": "#004e9d",
+            "on-tertiary": "#ffeefc",
+            "on-background": "#212d51",
+            "tertiary": "#853d97",
+            "on-secondary": "#f1f2ff",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#fb5151",
+            "on-primary": "#eff2ff",
+            "on-tertiary-container": "#5e1470",
+            "secondary-fixed-dim": "#b1c2ff",
+            "on-secondary-container": "#143fa2",
+            "primary-fixed-dim": "#4693ff",
+            "secondary-fixed": "#c4d0ff",
+            "on-primary-fixed-variant": "#002b5c",
+            "on-primary-fixed": "#000000",
+            "background": "#f6f5ff",
+            "on-surface-variant": "#4f5a81",
+            "tertiary-dim": "#78308a",
+            "error": "#b31b25",
+            "surface-bright": "#f6f5ff",
+            "on-primary-container": "#00224b",
+            "primary-fixed": "#65a1ff",
+            "tertiary-fixed-dim": "#e190f0",
+            "surface-tint": "#005ab3",
+            "on-tertiary-fixed": "#400050",
+            "on-secondary-fixed": "#002c82",
+            "surface-container-low": "#eff0ff",
+            "on-secondary-fixed-variant": "#2349ac",
+            "on-error-container": "#570008",
+            "error-dim": "#9f0519",
+            "surface-variant": "#d4dbff",
+            "on-error": "#ffefee",
+            "tertiary-fixed": "#f09dff",
+            "outline": "#6a759e",
+            "on-surface": "#212d51",
+            "secondary-dim": "#2148ab",
+            "surface-container-highest": "#d4dbff",
+            "primary": "#005ab3",
+            "primary-container": "#65a1ff",
+            "secondary-container": "#c4d0ff",
+            "on-tertiary-fixed-variant": "#681f7a",
+            "inverse-on-surface": "#909bc6",
+            "inverse-primary": "#3e90ff",
+            "outline-variant": "#a0acd7",
+            "tertiary-container": "#f09dff",
+            "surface": "#f6f5ff",
+            "surface-container-high": "#dbe1ff",
+            "surface-container": "#e3e7ff",
+            "inverse-surface": "#000b2f"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center px-6 h-16 w-full sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none font-['Inter'] antialiased">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">ShieldProxy</span>
+<nav class="hidden md:flex items-center gap-6 h-full">
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-2 rounded-lg" href="#">Overview</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-2 rounded-lg" href="#">Clients</a>
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 px-3 py-2 font-semibold" href="#">Alerts</a>
+<a class="text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors px-3 py-2 rounded-lg" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container rounded-full border-none text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search logs..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="ml-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+          New Policy
+        </button>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-16 z-30 h-screen w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 font-['Inter'] text-sm font-medium hidden md:flex">
+<div class="p-4 flex flex-col gap-1 overflow-y-auto flex-grow">
+<div class="mb-6 px-4">
+<p class="text-xs font-bold text-outline uppercase tracking-widest">Main Menu</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span>Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer active:translate-x-1" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span>Simulator</span>
+</a>
+<div class="mt-8 mb-4 px-4">
+<p class="text-xs font-bold text-outline uppercase tracking-widest">Resources</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-white/50">
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold">SP</div>
+<div>
+<p class="font-bold text-xs text-on-surface">ShieldProxy Admin</p>
+<p class="text-[10px] text-outline">System Active • v2.4.0</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-4 md:p-8">
+<div class="max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="mb-8">
+<h1 class="text-3xl font-extrabold text-on-surface tracking-tight font-headline">Security Alerts</h1>
+<p class="text-on-surface-variant mt-2">Real-time threat detection and model integrity monitoring.</p>
+</header>
+<!-- Bento Grid for Urgency -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- Critical High-Urgency Card -->
+<div class="md:col-span-2 glass-card border-2 border-error-container rounded-xl p-6 shadow-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-error text-on-error text-[10px] font-black px-2 py-1 rounded-full uppercase animate-pulse">Critical Priority</span>
+</div>
+<div class="flex flex-col h-full">
+<div class="flex items-start gap-4 mb-6">
+<div class="w-12 h-12 bg-error-container/20 rounded-lg flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">gpp_maybe</span>
+</div>
+<div>
+<h2 class="text-xl font-bold text-on-surface">Jailbreak Spike Detected</h2>
+<p class="text-on-surface-variant text-sm">Cluster: US-EAST-1 • Model: LLAMA-3-70B</p>
+</div>
+</div>
+<!-- Visualization: Waveform/Spike mockup -->
+<div class="flex-1 bg-surface-container rounded-lg p-4 flex flex-col justify-end h-48 relative mb-6">
+<div class="absolute inset-0 flex items-center justify-center opacity-10">
+<span class="material-symbols-outlined text-9xl">monitoring</span>
+</div>
+<div class="flex items-end gap-1 h-32 w-full">
+<div class="flex-1 bg-primary-dim h-1/4 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-dim h-1/3 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-dim h-1/2 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-dim h-1/3 rounded-t-sm"></div>
+<div class="flex-1 bg-error h-full rounded-t-sm relative">
+<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-error">+420%</span>
+</div>
+<div class="flex-1 bg-error h-4/5 rounded-t-sm"></div>
+<div class="flex-1 bg-error h-3/4 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-dim h-1/3 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-dim h-1/4 rounded-t-sm"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] font-bold text-outline">
+<span>08:00 AM</span>
+<span>DETECTION PEAK</span>
+<span>NOW</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex-1 bg-error text-on-error py-2.5 rounded-lg font-bold text-sm hover:brightness-110 transition-all">Enable Strict Mode</button>
+<button class="px-4 py-2.5 border border-outline text-on-surface rounded-lg font-bold text-sm hover:bg-surface-container transition-all">Ignore</button>
+</div>
+</div>
+</div>
+<!-- New Pattern Card -->
+<div class="bg-surface-container-highest rounded-xl p-6 border border-outline-variant flex flex-col">
+<div class="mb-4">
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">New Pattern</span>
+</div>
+<h3 class="text-lg font-bold mb-2">Prompt Injection Variant</h3>
+<p class="text-sm text-on-surface-variant mb-6">A new obfuscation technique using Base64 nested encoding has been detected in 12% of traffic.</p>
+<div class="flex-grow flex items-center justify-center py-4">
+<div class="relative w-32 h-32">
+<div class="absolute inset-0 rounded-full border-4 border-tertiary/20"></div>
+<div class="absolute inset-0 rounded-full border-4 border-tertiary border-t-transparent animate-spin" style="animation-duration: 3s;"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-4xl">psychology</span>
+</div>
+</div>
+</div>
+<div class="mt-auto space-y-2">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-outline">Confidence Score</span>
+<span class="text-tertiary">94.2%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[94%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Section: Model Updates & Alert Logs -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Alert Stream -->
+<div class="lg:col-span-2">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold tracking-tight">Recent Activity Log</h3>
+<div class="flex gap-2">
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                </button>
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm">download</span> Export
+                </button>
+</div>
+</div>
+<div class="space-y-4">
+<!-- Log Item 1 -->
+<div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-outline-variant hover:shadow-md transition-all group">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">shield_moon</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Data Leak Prevention Trigger</h4>
+<span class="text-[10px] text-outline font-medium">4 MINS AGO</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-1">Blocked attempt to extract system environmental variables via recursive prompts.</p>
+</div>
+<button class="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+<!-- Log Item 2 -->
+<div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-outline-variant hover:shadow-md transition-all group">
+<div class="w-10 h-10 rounded-full bg-error-container/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">policy</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Compliance Violation</h4>
+<span class="text-[10px] text-outline font-medium">12 MINS AGO</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-1">PII detected in outbound response. Automatic redaction applied (Redact-V2).</p>
+</div>
+<button class="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+<!-- Log Item 3 -->
+<div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-outline-variant hover:shadow-md transition-all group">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">sync_alt</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-bold text-on-surface">Model Latency Warning</h4>
+<span class="text-[10px] text-outline font-medium">1 HR AGO</span>
+</div>
+<p class="text-sm text-on-surface-variant line-clamp-1">Response times for GPT-4 cluster exceeding 1500ms threshold.</p>
+</div>
+<button class="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Model Updates Sidebar -->
+<div class="lg:col-span-1">
+<div class="bg-surface-container rounded-xl p-6 h-full border border-outline-variant">
+<h3 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">upgrade</span>
+                  Model Updates
+                </h3>
+<div class="relative border-l-2 border-primary-container ml-2 pl-6 space-y-8">
+<!-- Update 1 -->
+<div class="relative">
+<div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-surface"></div>
+<div>
+<span class="text-[10px] font-black text-primary uppercase">v2.4.0 Patch</span>
+<h4 class="font-bold text-sm mt-1">Llama 3 Defense Weights</h4>
+<p class="text-xs text-on-surface-variant mt-1">Updated zero-shot injection detection filters for improved recall on multilingual attacks.</p>
+<span class="text-[10px] text-outline block mt-2">TODAY, 4:12 AM</span>
+</div>
+</div>
+<!-- Update 2 -->
+<div class="relative opacity-70">
+<div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-outline-variant border-4 border-surface"></div>
+<div>
+<span class="text-[10px] font-black text-outline uppercase">v2.3.9 Maintenance</span>
+<h4 class="font-bold text-sm mt-1">Regex Core Update</h4>
+<p class="text-xs text-on-surface-variant mt-1">Added 42 new PII patterns for GDPR compliance in European regions.</p>
+<span class="text-[10px] text-outline block mt-2">YESTERDAY, 11:30 PM</span>
+</div>
+</div>
+<!-- Update 3 -->
+<div class="relative opacity-60">
+<div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-outline-variant border-4 border-surface"></div>
+<div>
+<span class="text-[10px] font-black text-outline uppercase">v2.3.5 Stable</span>
+<h4 class="font-bold text-sm mt-1">Claude 3.5 Sonnet Support</h4>
+<p class="text-xs text-on-surface-variant mt-1">Official proxy support for Anthropic's latest release with custom safety guardrails.</p>
+<span class="text-[10px] text-outline block mt-2">AUG 21, 2024</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/30">
+<button class="w-full py-3 bg-surface-container-highest text-primary font-bold text-xs rounded-lg hover:bg-surface-container-lowest transition-all">
+                    View Version History
+                  </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Decorative Area -->
+<section class="mt-12 rounded-2xl h-48 w-full overflow-hidden relative border border-outline-variant">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Abstract cyber security background with digital matrix glowing lines and blue technological patterns in a dark environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhw8-ACxcwjQ0XgFfYquvO2doDtAbUuQky4rxvf06sGo1CBAao4DRtb9cp4Dd8CHwCTW9mumT9YBqOHbf1_yJcay0Xtko6OcxHLMLpOiiKQMD7Z3hJzGV3mvtdfwQ1faXylhLnrHD_UkiOJDg_olMkLb2mdme9sn113Rqo3mkF4RmHQXM_P8rjre472z3fEH4MR3uJcyDSc5B3qUPdejN1sHzqY6i0ZO_rH4LyL2MM7gj8nfmjkDF6lpcoRgEf3YMko4ZgSj1NSVE"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent flex items-center p-8">
+<div class="max-w-md">
+<h4 class="text-xl font-bold text-on-surface mb-2">Security Posture: Optimized</h4>
+<p class="text-sm text-on-surface-variant">ShieldProxy has successfully mitigated 4,203 threats in the last 24 hours with an average latency of 42ms.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Bottom Nav Bar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px]">Clients</span>
+</a>
+<a class="flex flex-col items-center text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="text-[10px] font-bold">Alerts</span>
+</a>
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px]">Data</span>
+</a>
+<a class="flex flex-col items-center text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Settings</span>
+</a>
+</nav>
+</body></html>
